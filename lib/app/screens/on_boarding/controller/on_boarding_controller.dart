@@ -1,4 +1,8 @@
+import 'package:art_gallery/app/common/image_constants.dart';
+import 'package:art_gallery/app/common/route_constants.dart';
+import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -15,39 +19,50 @@ class OnBoardingController extends GetxController {
   void addPageViewData() {
     pageViewModelList.add(
       PageViewModel(
+        title: "Confused.? What to buy..?",
+        body:
+            "We have a solution \"Art Gallery\".! Let's take a small tour... ",
+        decoration: PageDecoration(
+            bodyPadding: EdgeInsets.symmetric(horizontal: 16),
+            bodyTextStyle: TextStyles.kH18BlackBold400,
+            titleTextStyle: TextStyles.kH20BlackBold),
+        image: Padding(
+          padding: EdgeInsets.only(top: 80),
+          child: SvgPicture.asset(kImgOnBoardingOne),
+        ),
+      ),
+    );
+    pageViewModelList.add(
+      PageViewModel(
         title: "Title of introduction page",
         body: "Welcome to the app! This is a description of how it works.",
-        image: const Center(
-          child: Icon(Icons.waving_hand, size: 50.0),
+        decoration: PageDecoration(
+            bodyPadding: EdgeInsets.symmetric(horizontal: 16),
+            bodyTextStyle: TextStyles.kH18BlackBold400,
+            titleTextStyle: TextStyles.kH20BlackBold),
+        image: Container(
+          margin: EdgeInsets.only(top: 40),
+          height: 500,
+          child: SvgPicture.asset(kImgOnBoardingTwo),
         ),
       ),
     );
     pageViewModelList.add(
       PageViewModel(
-        title: "Title of blue page",
-        body:
-            "Welcome to the app! This is a description on a page with a blue background.",
+        title: "Title of introduction page",
+        body: "Welcome to the app! This is a description of how it works.",
+        decoration: PageDecoration(
+            bodyPadding: EdgeInsets.symmetric(horizontal: 16),
+            bodyTextStyle: TextStyles.kH18BlackBold400,
+            titleTextStyle: TextStyles.kH20BlackBold),
         image: Center(
-          child: Image.network("https://example.com/image.png", height: 175.0),
-        ),
-        decoration: const PageDecoration(
-          pageColor: Colors.blue,
+          child: SvgPicture.asset(kImgOnBoardingThree),
         ),
       ),
     );
-    pageViewModelList.add(
-      PageViewModel(
-        title: "Title of orange text and bold page",
-        body:
-            "This is a description on a page with an orange title and bold, big body.",
-        image: const Center(
-          child: Text("👋", style: TextStyle(fontSize: 100.0)),
-        ),
-        decoration: const PageDecoration(
-          titleTextStyle: TextStyle(color: Colors.orange),
-          bodyTextStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 20.0),
-        ),
-      ),
-    );
+  }
+
+  void navigateToLoginScreen() {
+    Get.toNamed(kRouteLoginScreen); /// remove previous screen after testing login
   }
 }

@@ -19,21 +19,26 @@ class OnBoardingScreen extends GetView<OnBoardingController> {
           showDoneButton: true,
           showNextButton: true,
           showSkipButton: true,
-          done: Text(kDone),
+          done: Text(
+            kDone,
+            style: TextStyles.kH14PrimaryBold,
+          ),
           next: Container(
               height: 40,
               width: 40,
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                 color: kColorPrimary,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(50),
               ),
               child: SvgPicture.asset(
                 kIconNextArrow,
                 color: kColorWhite,
               )),
           skip: Text(kSkip, style: TextStyles.kH14PrimaryBold),
-          onDone: () {},
+          onDone: () {
+            controller.navigateToLoginScreen();
+          },
           pages: controller.pageViewModelList,
           dotsDecorator:
               DotsDecorator(color: Colors.grey, activeColor: kColorPrimary),

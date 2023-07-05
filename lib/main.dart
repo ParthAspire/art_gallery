@@ -1,4 +1,5 @@
 import 'package:art_gallery/app/common/app_constants.dart';
+import 'package:art_gallery/app/common/color_constants.dart';
 import 'package:art_gallery/app/common/route_constants.dart';
 import 'package:art_gallery/app/controller/controller_bindings.dart';
 import 'package:art_gallery/app/screens/auth/login/view/login_view.dart';
@@ -7,11 +8,16 @@ import 'package:art_gallery/app/screens/on_boarding/view/on_boarding_screen.dart
 import 'package:art_gallery/app/screens/splash_screen/view/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    // systemNavigationBarColor: Colors.blue, // navigation bar color
+    statusBarColor: kColorPrimary, // status bar color
+  ));
   runApp(const MyApp());
 }
 

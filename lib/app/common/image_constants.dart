@@ -1,6 +1,7 @@
 const _imgPath = 'lib/assets/images';
 const _iconPath = 'lib/assets/icons';
 
+const String kIconApp ='$_iconPath/app_icon.png';
 const String kIconNextArrow ='$_iconPath/next_arrow_icon.svg';
 const String kIconGoogle ='$_iconPath/google_icon.svg';
 

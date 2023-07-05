@@ -15,6 +15,9 @@ const String kOr = 'Or';
 const String kHelloArtLovers = 'Hello, Art Lover\'s';
 
 
+/// error texts
+const String kErrorGmail = 'Please login with valid credentials';
+
 class AppConstants {
   static int userId = 0;
   static String countryCode = 'IN';

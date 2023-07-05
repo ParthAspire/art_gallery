@@ -1,5 +1,6 @@
 import 'package:art_gallery/app/common/app_constants.dart';
 import 'package:art_gallery/app/common/color_constants.dart';
+import 'package:art_gallery/app/common/image_constants.dart';
 import 'package:art_gallery/app/common/route_constants.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,13 +39,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kColorPrimary,
+      backgroundColor: kColorWhite,
       // 6495ED (CornflowerBlue ), 00BFFF(DeepSkyBlue), 87CEFA(LightSkyBlue )
       body: Center(
-        child: Text(
-          appName,
-          style: TextStyles.kH20WhiteBold700,
-        ),
+        child: Image.asset(kIconApp),
       ),
     );
   }

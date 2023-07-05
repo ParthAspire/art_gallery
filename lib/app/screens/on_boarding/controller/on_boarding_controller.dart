@@ -22,7 +22,7 @@ class OnBoardingController extends GetxController {
         title: "Confused.? What to buy..?",
         body:
             "We have a solution \"Art Gallery\".! Let's take a small tour... ",
-        decoration: PageDecoration(
+        decoration: const PageDecoration(
             bodyPadding: EdgeInsets.symmetric(horizontal: 16),
             bodyTextStyle: TextStyles.kH18BlackBold400,
             titleTextStyle: TextStyles.kH20BlackBold),
@@ -36,7 +36,7 @@ class OnBoardingController extends GetxController {
       PageViewModel(
         title: "Title of introduction page",
         body: "Welcome to the app! This is a description of how it works.",
-        decoration: PageDecoration(
+        decoration: const PageDecoration(
             bodyPadding: EdgeInsets.symmetric(horizontal: 16),
             bodyTextStyle: TextStyles.kH18BlackBold400,
             titleTextStyle: TextStyles.kH20BlackBold),
@@ -51,7 +51,7 @@ class OnBoardingController extends GetxController {
       PageViewModel(
         title: "Title of introduction page",
         body: "Welcome to the app! This is a description of how it works.",
-        decoration: PageDecoration(
+        decoration: const PageDecoration(
             bodyPadding: EdgeInsets.symmetric(horizontal: 16),
             bodyTextStyle: TextStyles.kH18BlackBold400,
             titleTextStyle: TextStyles.kH20BlackBold),
@@ -63,6 +63,6 @@ class OnBoardingController extends GetxController {
   }
 
   void navigateToLoginScreen() {
-    Get.toNamed(kRouteLoginScreen); /// remove previous screen after testing login
+    Get.offAllNamed(kRouteLoginScreen);
   }
 }

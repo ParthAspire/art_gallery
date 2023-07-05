@@ -1,12 +1,13 @@
 import 'package:art_gallery/app/common/app_constants.dart';
 import 'package:art_gallery/app/common/color_constants.dart';
 import 'package:art_gallery/app/common/image_constants.dart';
+import 'package:art_gallery/app/screens/auth/login/controller/login_controller.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
 
   @override
@@ -100,32 +101,37 @@ class LoginScreen extends StatelessWidget {
                         ),
 
                         /// visitor container
-                        Container(
-                          margin: const EdgeInsets.only(
-                              left: 32, right: 32,  top: 20),
-                          decoration: BoxDecoration(
-                            color: kColorPrimary,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: kColorPrimary),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: kColorWhite,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: kColorPrimary),
+                        GestureDetector(
+                          onTap: () {
+                            controller.loginAsViewer();
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                left: 32, right: 32, top: 20),
+                            decoration: BoxDecoration(
+                              color: kColorPrimary,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: kColorPrimary),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: kColorWhite,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: kColorPrimary),
+                                  ),
+                                  child: SvgPicture.asset(kIconGoogle),
+                                  margin: const EdgeInsets.all(8),
                                 ),
-                                child: SvgPicture.asset(kIconGoogle),
-                                margin: const EdgeInsets.all(8),
-                              ),
-                              SizedBox(
-                                width: Get.width * .55,
-                                child: Text(kVisitor.toUpperCase(),
-                                    style: TextStyles.kH24WhiteBold,
-                                    textAlign: TextAlign.center),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: Get.width * .55,
+                                  child: Text(kVisitor.toUpperCase(),
+                                      style: TextStyles.kH24WhiteBold,
+                                      textAlign: TextAlign.center),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

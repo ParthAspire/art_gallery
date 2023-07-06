@@ -6,12 +6,20 @@ class TextStyles {
   static const double kH14FontSize = 14;
   static const double kH18FontSize = 18;
   static const double kH20FontSize = 20;
+  static const double kH22FontSize = 22;
   static const double kH24FontSize = 24;
+  static const double kH28FontSize = 28;
 
   static const kH14WhiteBold400 = TextStyle(
     fontSize: kH14FontSize,
     color: kColorWhite,
     fontWeight: FontWeight.w400,
+    fontFamily: fontFamily,
+  );
+  static const kH14WhiteBold700 = TextStyle(
+    fontSize: kH14FontSize,
+    color: kColorWhite,
+    fontWeight: FontWeight.w700,
     fontFamily: fontFamily,
   );
   static const kH14PrimaryBold400 = TextStyle(
@@ -24,6 +32,12 @@ class TextStyles {
     fontSize: kH14FontSize,
     color: kColorPrimary,
     fontWeight: FontWeight.bold,
+    fontFamily: fontFamily,
+  );
+  static const kH14Grey6ABold400 = TextStyle(
+    fontSize: kH14FontSize,
+    color: kColorGray6A,
+    fontWeight: FontWeight.w400,
     fontFamily: fontFamily,
   );
 
@@ -51,9 +65,21 @@ class TextStyles {
     fontWeight: FontWeight.bold,
     fontFamily: fontFamily,
   );
+  static const kH18BlackBold = TextStyle(
+    fontSize: kH18FontSize,
+    color: kColorBlack,
+    fontWeight: FontWeight.bold,
+    fontFamily: fontFamily,
+  );
   static const kH18BlackBold400 = TextStyle(
     fontSize: kH18FontSize,
     color: kColorBlack,
+    fontWeight: FontWeight.w400,
+    fontFamily: fontFamily,
+  );
+  static const kH18RedBold400 = TextStyle(
+    fontSize: kH18FontSize,
+    color: kColorRed,
     fontWeight: FontWeight.w400,
     fontFamily: fontFamily,
   );
@@ -66,6 +92,13 @@ class TextStyles {
   );
   static const kH20BlackBold = TextStyle(
     fontSize: kH20FontSize,
+    color: kColorBlack,
+    fontWeight: FontWeight.bold,
+    fontFamily: fontFamily,
+  );
+
+  static const kH22BlackBold = TextStyle(
+    fontSize: kH22FontSize,
     color: kColorBlack,
     fontWeight: FontWeight.bold,
     fontFamily: fontFamily,
@@ -87,6 +120,25 @@ class TextStyles {
     fontSize: kH24FontSize,
     color: kColorBlack,
     fontWeight: FontWeight.bold,
+    fontFamily: fontFamily,
+  );
+
+  static const kH28BlackBold = TextStyle(
+    fontSize: kH28FontSize,
+    color: kColorBlack,
+    fontWeight: FontWeight.bold,
+    fontFamily: fontFamily,
+  );
+  static const kH28WhiteBold = TextStyle(
+    fontSize: kH28FontSize,
+    color: kColorWhite,
+    fontWeight: FontWeight.bold,
+    fontFamily: fontFamily,
+  );
+  static const kH28BlackBold500 = TextStyle(
+    fontSize: kH28FontSize,
+    color: kColorBlack,
+    fontWeight: FontWeight.w500,
     fontFamily: fontFamily,
   );
 }

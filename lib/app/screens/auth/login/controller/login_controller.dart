@@ -8,7 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class LoginController extends GetxController {
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
-  Future<void> loginAsViewer() async {
+  Future<void> loginAsViewer({bool isAdmin = false}) async {
     GoogleSignIn? gmailData = await SocialMediaServices().loginWithGmail();
 
     if (gmailData != null) {
@@ -30,7 +30,7 @@ class LoginController extends GetxController {
             email: gmailData.currentUser?.email ?? 'user@gmail.com',
             password: gmailData.currentUser?.email ?? 'user@gmail.com',
             photoUrl: gmailData.currentUser?.photoUrl ?? '',
-            isAdmin: false)
+            isAdmin: isAdmin)
             .then((userData) {
           if (userData != null) {
             navigateToDashBoardScreen();

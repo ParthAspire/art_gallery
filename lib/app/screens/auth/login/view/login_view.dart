@@ -48,32 +48,37 @@ class LoginScreen extends GetView<LoginController> {
                     child: Column(
                       children: [
                         /// admin container
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: 32, right: 32, top: Get.height * .5),
-                          decoration: BoxDecoration(
-                            color: kColorWhite,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: kColorPrimary),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: kColorWhite,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: kColorPrimary),
+                        GestureDetector(
+                          onTap: () {
+                            controller.loginAsViewer(isAdmin: true);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                left: 32, right: 32, top: Get.height * .5),
+                            decoration: BoxDecoration(
+                              color: kColorWhite,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: kColorPrimary),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: kColorWhite,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(color: kColorPrimary),
+                                  ),
+                                  child: SvgPicture.asset(kIconGoogle),
+                                  margin: const EdgeInsets.all(8),
                                 ),
-                                child: SvgPicture.asset(kIconGoogle),
-                                margin: const EdgeInsets.all(8),
-                              ),
-                              SizedBox(
-                                width: Get.width * .55,
-                                child: Text(kAdmin.toUpperCase(),
-                                    style: TextStyles.kH24PrimaryBold,
-                                    textAlign: TextAlign.center),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: Get.width * .55,
+                                  child: Text(kAdmin.toUpperCase(),
+                                      style: TextStyles.kH24PrimaryBold,
+                                      textAlign: TextAlign.center),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
@@ -103,7 +108,7 @@ class LoginScreen extends GetView<LoginController> {
                         /// visitor container
                         GestureDetector(
                           onTap: () {
-                            controller.loginAsViewer();
+                            controller.loginAsViewer(isAdmin: false);
                           },
                           child: Container(
                             margin: const EdgeInsets.only(

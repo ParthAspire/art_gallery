@@ -3,7 +3,10 @@ import 'package:art_gallery/app/common/color_constants.dart';
 import 'package:art_gallery/app/common/route_constants.dart';
 import 'package:art_gallery/app/controller/controller_bindings.dart';
 import 'package:art_gallery/app/screens/auth/login/view/login_view.dart';
+import 'package:art_gallery/app/screens/dashboard/admin/add_product/view/add_product_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/bottom_nav/view/bottom_nav_screen.dart';
+import 'package:art_gallery/app/screens/dashboard/home/base/view/home_base_screen.dart';
+import 'package:art_gallery/app/screens/dashboard/product/product_details/view/product_details_screen.dart';
 import 'package:art_gallery/app/screens/on_boarding/view/on_boarding_screen.dart';
 import 'package:art_gallery/app/screens/splash_screen/view/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +19,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     // systemNavigationBarColor: Colors.blue, // navigation bar color
-    statusBarColor: kColorPrimary, // status bar color
+    statusBarColor: kColorBlack, // status bar color
   ));
   runApp(const MyApp());
 }
@@ -31,9 +34,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: appName,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          appBarTheme: AppBarTheme(backgroundColor: kColorBlack)),
       initialBinding: ControllerBindings(),
       home: SplashScreen(),
       routingCallback: (value) {
@@ -44,13 +47,26 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: kRouteLoginScreen,
           page: () => LoginScreen(),
-        ), GetPage(
+        ),
+        GetPage(
           name: kRouteOnBoardingScreen,
           page: () => OnBoardingScreen(),
         ),
         GetPage(
           name: kRouteBottomNavScreen,
           page: () => BottomNavScreen(),
+        ),
+        GetPage(
+          name: kRouteHomeBaseScreen,
+          page: () => HomeBaseScreen(),
+        ),
+        GetPage(
+          name: kRouteAddProductScreen,
+          page: () => AddProductScreen(),
+        ),
+        GetPage(
+          name: kRouteProductDetailsScreen,
+          page: () => ProductDetailsScreen(),
         ),
       ],
     );

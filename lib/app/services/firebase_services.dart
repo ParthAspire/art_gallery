@@ -40,6 +40,13 @@ class FirebaseServices {
         });
         return user;
       }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        AlertMessages().showErrorToast('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        AlertMessages()
+            .showErrorToast('The account already exists for that email.');
+      }
     } catch (e) {
       debugPrint('signUp with firebase ::: $e');
       return null;
@@ -58,6 +65,12 @@ class FirebaseServices {
       } else {
         AlertMessages().showErrorToast(kErrorGmail);
       }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        AlertMessages().showErrorToast('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        AlertMessages().showErrorToast('Wrong password provided.');
+      }
     } catch (e) {
       debugPrint('login with firebase ::: $e');
     }
@@ -71,6 +84,23 @@ class FirebaseServices {
       await fireStore
           .collection('users')
           .where('email', isEqualTo: gmailData.currentUser?.email)
+          .get()
+          .then((value) {
+        value.size > 0 ? isExist = true : isExist = false;
+      });
+      return isExist;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// check is product already exist or not
+  Future<bool> isProductExist({required String fileName}) async {
+    try {
+      bool isExist = false;
+      await fireStore
+          .collection('products')
+          .where('email', isEqualTo: fileName)
           .get()
           .then((value) {
         value.size > 0 ? isExist = true : isExist = false;

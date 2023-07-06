@@ -14,6 +14,13 @@ const String kAdmin = 'Admin';
 const String kOr = 'Or';
 const String kHelloArtLovers = 'Hello, Art Lover\'s';
 
+/// settings screen labels
+const String kMyProfile = 'My Profile';
+const String kLogout = 'Logout';
+
+/// home screen labels
+const String kAddProduct = 'Add Product';
+const String kSelectYourBestPicsEver = 'Select your best pics ever!';
 
 /// error texts
 const String kErrorGmail = 'Please login with valid credentials';

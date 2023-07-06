@@ -1,6 +1,8 @@
 import 'package:art_gallery/app/common/color_constants.dart';
 import 'package:art_gallery/app/common/image_constants.dart';
 import 'package:art_gallery/app/screens/dashboard/bottom_nav/controller/bottom_nav_controller.dart';
+import 'package:art_gallery/app/screens/dashboard/home/base/view/home_base_screen.dart';
+import 'package:art_gallery/app/screens/dashboard/settings/base/view/settings_base_screen.dart';
 import 'package:art_gallery/app/widgets/water_drop_bottom_nav/src/bar_item.dart';
 import 'package:art_gallery/app/widgets/water_drop_bottom_nav/src/build_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +18,8 @@ class BottomNavScreen extends GetView<BottomNavController> {
         body: IndexedStack(
           index: controller.selectedIndex.value,
           children: [
-            Container(
-              alignment: Alignment.center,
-              child: Text("Page 10"),
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Text("Page 2"),
-            ),
+            HomeBaseScreen(),
+            SettingsBaseScreen(),
           ],
         ),
         bottomNavigationBar: WaterDropNavBar(

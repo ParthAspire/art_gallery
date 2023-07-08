@@ -8,3 +8,4 @@ const String kRouteProductDetailsScreen = '/ProductDetailsScreen';
 
 /// admin
 const String kRouteAddProductScreen = '/AddProductScreen';
+const String kRouteUsersListingScreen = '/UsersListingScreen';

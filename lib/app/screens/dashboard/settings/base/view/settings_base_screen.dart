@@ -47,6 +47,59 @@ class SettingsBaseScreen extends GetView<SettingsBaseController> {
               children: [
                 userProfileContainer(),
                 horizontalDividerWidget(width: Get.width * .9),
+                Container(
+                  margin:
+                      EdgeInsets.only(top: 16, left: 24, right: 24, bottom: 16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(kBorderRadius),
+                      border: Border.all(color: kColorGrayE0)),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.settingsList.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          controller.navigateToScreen(index);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: kHorizontalPadding, vertical: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      color: kColorGrayE0,
+                                      borderRadius:
+                                          BorderRadius.circular(kBorderRadius),
+                                      border: Border.all(color: kColorWhite),
+                                    ),
+                                    child: SvgPicture.asset(
+                                        controller
+                                            .settingsList[index].settingIcon,
+                                        height: 28),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 12),
+                                    child: Text(
+                                        controller
+                                            .settingsList[index].settingName,
+                                        style: TextStyles.kH16BlackBold700),
+                                  ),
+                                ],
+                              ),
+                              Icon(Icons.navigate_next_outlined),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 Spacer(),
                 horizontalDividerWidget(width: Get.width * .9),
                 logoutButton(),

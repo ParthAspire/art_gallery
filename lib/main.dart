@@ -7,6 +7,7 @@ import 'package:art_gallery/app/screens/dashboard/admin/add_product/view/add_pro
 import 'package:art_gallery/app/screens/dashboard/bottom_nav/view/bottom_nav_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/home/base/view/home_base_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/product/product_details/view/product_details_screen.dart';
+import 'package:art_gallery/app/screens/dashboard/settings/users_listing/view/user_listing_screen.dart';
 import 'package:art_gallery/app/screens/on_boarding/view/on_boarding_screen.dart';
 import 'package:art_gallery/app/screens/splash_screen/view/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,8 +19,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  // systemNavigationBarColor: Colors.blue, // navigation bar color
-  statusBarColor: kColorBlack, // status bar color
+    // systemNavigationBarColor: Colors.blue, // navigation bar color
+    statusBarColor: kColorBlack, // status bar color
   ));
   runApp(const MyApp());
 }
@@ -40,7 +41,6 @@ class MyApp extends StatelessWidget {
             backgroundColor: kColorBlack,
             systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: kColorBlack,
-
             ),
           )),
       initialBinding: ControllerBindings(),
@@ -67,12 +67,18 @@ class MyApp extends StatelessWidget {
           page: () => HomeBaseScreen(),
         ),
         GetPage(
+          name: kRouteProductDetailsScreen,
+          page: () => ProductDetailsScreen(),
+        ),
+
+        /// admin
+        GetPage(
           name: kRouteAddProductScreen,
           page: () => AddProductScreen(),
         ),
         GetPage(
-          name: kRouteProductDetailsScreen,
-          page: () => ProductDetailsScreen(),
+          name: kRouteUsersListingScreen,
+          page: () => UsersListingScreen(),
         ),
       ],
     );

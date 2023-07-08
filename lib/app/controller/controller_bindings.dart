@@ -4,6 +4,7 @@ import 'package:art_gallery/app/screens/dashboard/bottom_nav/controller/bottom_n
 import 'package:art_gallery/app/screens/dashboard/home/base/controller/home_base_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/product/product_details/controller/product_details_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/settings/base/controller/settings_base_controller.dart';
+import 'package:art_gallery/app/screens/dashboard/settings/users_listing/controller/users_listing_controller.dart';
 import 'package:art_gallery/app/screens/on_boarding/controller/on_boarding_controller.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +25,8 @@ class ControllerBindings implements Bindings {
 
     /// admin
     Get.lazyPut<AddProductController>(() => AddProductController(),
+        fenix: true);
+    Get.lazyPut<UsersListingController>(() => UsersListingController(),
         fenix: true);
   }
 }

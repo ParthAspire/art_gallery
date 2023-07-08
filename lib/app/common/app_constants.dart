@@ -16,6 +16,8 @@ const String kHelloArtLovers = 'Hello, Art Lover\'s';
 
 /// settings screen labels
 const String kMyProfile = 'My Profile';
+const String kPersonalDetails = 'Personal Details';
+const String kUsers = 'Users';
 const String kLogout = 'Logout';
 
 /// home screen labels

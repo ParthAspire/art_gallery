@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class TextStyles {
   static const double kH14FontSize = 14;
+  static const double kH16FontSize = 16;
   static const double kH18FontSize = 18;
   static const double kH20FontSize = 20;
   static const double kH22FontSize = 22;
@@ -53,6 +54,20 @@ class TextStyles {
     fontFamily: fontFamily,
   );
 
+
+  static const kH16BlackBold700 = TextStyle(
+    fontSize: kH16FontSize,
+    color: kColorBlack,
+    fontWeight: FontWeight.w700,
+    fontFamily: fontFamily,
+  );
+  static const kH16Gray6ABold400 = TextStyle(
+    fontSize: kH16FontSize,
+    color: kColorGray98,
+    fontWeight: FontWeight.w400,
+    fontFamily: fontFamily,
+  );
+
   static const kH18PrimaryBold = TextStyle(
     fontSize: kH18FontSize,
     color: kColorPrimary,
@@ -95,6 +110,7 @@ class TextStyles {
     fontWeight: FontWeight.w400,
     fontFamily: fontFamily,
   );
+
 
   static const kH20WhiteBold700 = TextStyle(
     fontSize: kH20FontSize,

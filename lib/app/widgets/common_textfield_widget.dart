@@ -50,7 +50,7 @@ Widget commonTextField(
           borderRadius: BorderRadius.circular(kBorderRadius),
         ),
         disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: kColorBlack, width: 0),
+            borderSide: BorderSide(color: kColorBlack, width: 1),
             borderRadius: BorderRadius.circular(kBorderRadius)),
         enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: kColorBlack, width: 1),

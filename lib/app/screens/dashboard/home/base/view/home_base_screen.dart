@@ -21,23 +21,24 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: commonAppBar(
-            titleStr: 'Home',
-            onBackTap: () {},
-            isShowBackArrow: false,
-            isCenterTitle: false,
-            actionWidgets: [
-              Visibility(
-                visible: controller.userData.value.isAdmin == true,
-                child: GestureDetector(
-                  onTap: () => controller.navigateToAddProductScreen(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(kImgDefaultProduct, height: 40),
-                  ),
-                ),
-              ),
-            ]),
+        appBar: getAppBar(),
+        // commonAppBar(
+        //     titleStr: 'Home',
+        //     onBackTap: () {},
+        //     isShowBackArrow: false,
+        //     isCenterTitle: false,
+        //     actionWidgets: [
+        //       Visibility(
+        //         visible: controller.userData.value.isAdmin == true,
+        //         child: GestureDetector(
+        //           onTap: () => controller.navigateToAddProductScreen(),
+        //           child: Padding(
+        //             padding: const EdgeInsets.all(8.0),
+        //             child: SvgPicture.asset(kImgDefaultProduct, height: 40),
+        //           ),
+        //         ),
+        //       ),
+        //     ]),
         body: Stack(
           children: [
             Obx(() {
@@ -122,7 +123,7 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                           children: [
                             ClipRRect(
                               borderRadius:
-                                  BorderRadius.circular(kBorderRadius),
+                              BorderRadius.circular(kBorderRadius),
                               child: CachedNetworkImage(
                                 imageUrl: productData.productImage ?? '',
                                 height: 200,
@@ -155,7 +156,8 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                                             style: TextStyles.kH14RedBold700),
                                         TextSpan(
                                             text:
-                                                'Rs.${productData.productPrice ?? ''}',
+                                            'Rs.${productData.productPrice ??
+                                                ''}',
                                             style: TextStyles.kH14BlackBold700),
                                       ],
                                     ),
@@ -236,6 +238,44 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
               Get.back();
             });
       },
+    );
+  }
+
+  getAppBar() {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      leadingWidth: 16,
+      titleSpacing: 0,
+      backgroundColor: kColorBlack,
+      centerTitle: true,
+      title: Row(
+        children: [
+          Container(
+              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+              decoration: BoxDecoration(
+                  color: kColorWhite, borderRadius: BorderRadius.circular(4)),
+              child: SvgPicture.asset(kIconApp, height: 28, width: 26)),
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Text('$appName', style: TextStyles.kH28WhiteBold),
+          ),
+        ],
+      ),
+      leading: SizedBox(),
+      actions: [
+        Obx(() {
+          return Visibility(
+            visible: controller.userData.value.isAdmin == true,
+            child: GestureDetector(
+              onTap: () => controller.navigateToAddProductScreen(),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SvgPicture.asset(kImgDefaultProduct, height: 40),
+              ),
+            ),
+          );
+        }),
+      ],
     );
   }
 }

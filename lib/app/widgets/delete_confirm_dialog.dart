@@ -49,7 +49,10 @@ deleteConfirmDialog({
                 ),
               ),
             ),
-            Text(titleText, style: TextStyles.kH16WhiteBold700),
+            Padding(
+              padding: EdgeInsets.only(top: (productImage ?? '').isNotEmpty?0:12),
+              child: Text(titleText, style: TextStyles.kH16WhiteBold700),
+            ),
             Visibility(
                 visible: (subTitleText ?? '').isNotEmpty,
                 child:
@@ -57,7 +60,7 @@ deleteConfirmDialog({
           ],
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 26),
+          padding:  EdgeInsets.symmetric(horizontal: 10, vertical: (productImage ?? '').isNotEmpty?20:16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

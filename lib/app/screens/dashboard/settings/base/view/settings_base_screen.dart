@@ -5,7 +5,9 @@ import 'package:art_gallery/app/screens/dashboard/settings/base/controller/setti
 import 'package:art_gallery/app/utils/content_properties.dart';
 import 'package:art_gallery/app/utils/loading_widget.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
+import 'package:art_gallery/app/widgets/delete_confirm_dialog.dart';
 import 'package:art_gallery/app/widgets/divider_widget.dart';
+import 'package:art_gallery/app/widgets/primary_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -49,7 +51,7 @@ class SettingsBaseScreen extends GetView<SettingsBaseController> {
                 horizontalDividerWidget(width: Get.width * .9),
                 Container(
                   margin:
-                      EdgeInsets.only(top: 16, left: 24, right: 24, bottom: 16),
+                      EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 16),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(kBorderRadius),
                       border: Border.all(color: kColorGrayE0)),
@@ -63,7 +65,7 @@ class SettingsBaseScreen extends GetView<SettingsBaseController> {
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: kHorizontalPadding, vertical: 8),
+                              horizontal: 10, vertical: 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -151,11 +153,10 @@ class SettingsBaseScreen extends GetView<SettingsBaseController> {
   logoutButton() {
     return GestureDetector(
       onTap: () {
-        controller.logout();
+        showLogoutDialog();
       },
       child: Padding(
-        padding: const EdgeInsets.only(
-            bottom: 100, left: kHorizontalPadding, top: 12),
+        padding: const EdgeInsets.only(bottom: 100, left: 24, top: 12),
         child: Row(
           children: [
             SvgPicture.asset(kIconLogout),
@@ -166,6 +167,25 @@ class SettingsBaseScreen extends GetView<SettingsBaseController> {
           ],
         ),
       ),
+    );
+  }
+
+  void showLogoutDialog() {
+    showDialog(
+      context: Get.overlayContext!,
+      builder: (context) {
+        return deleteConfirmDialog(
+          titleText: kLogoutText,
+          positiveButtonText: kYes,
+          negativeButtonText: kNo,
+          positiveTap: () {
+            controller.logout();
+          },
+          negativeTap: () {
+            Get.back();
+          },
+        );
+      },
     );
   }
 }

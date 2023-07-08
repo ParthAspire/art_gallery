@@ -29,7 +29,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     namespace "com.art.art_gallery"
     compileSdkVersion flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    ndkVersion "25.2.9519653"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

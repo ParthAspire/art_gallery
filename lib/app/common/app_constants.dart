@@ -19,10 +19,16 @@ const String kMyProfile = 'My Profile';
 const String kPersonalDetails = 'Personal Details';
 const String kUsers = 'Users';
 const String kLogout = 'Logout';
+const String kYes = 'Yes';
+const String kNo = 'No';
+const String kLogoutText = 'Are you sure.? You want to Logout?';
 
 /// home screen labels
 const String kAddProduct = 'Add Product';
 const String kSelectYourBestPicsEver = 'Select your best pics ever!';
+const String kProductDeleteText = 'Are you sure?. You want to delete ';
+const String kNoProductFound =
+    'There\'s no art to find the mind\'s construction in the face';
 
 /// add product screen labels
 const String kProductName = 'Product Name';

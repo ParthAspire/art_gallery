@@ -61,6 +61,12 @@ class TextStyles {
     fontWeight: FontWeight.w700,
     fontFamily: fontFamily,
   );
+  static const kH16WhiteBold700 = TextStyle(
+    fontSize: kH16FontSize,
+    color: kColorWhite,
+    fontWeight: FontWeight.w700,
+    fontFamily: fontFamily,
+  );
   static const kH16Gray6ABold400 = TextStyle(
     fontSize: kH16FontSize,
     color: kColorGray98,

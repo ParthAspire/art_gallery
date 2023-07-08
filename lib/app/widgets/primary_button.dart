@@ -9,6 +9,10 @@ Widget primaryButton({
   required String buttonTxt,
   double? width,
   double? height,
+  Color bgColor = kColorPrimary,
+  Color borderColor = kColorPrimary,
+  TextStyle textStyles = TextStyles.kH14WhiteBold700,
+  double borderRadius  = kButtonBorderRadius,
 }) {
   return MaterialButton(
     padding: EdgeInsets.zero,
@@ -20,12 +24,13 @@ Widget primaryButton({
       height: height ?? 58,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: kColorPrimary,
-        borderRadius: BorderRadius.circular(kButtonBorderRadius),
+        color:bgColor ,
+        border: Border.all(color: borderColor),
+        borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: Text(
         buttonTxt,
-        style: TextStyles.kH14WhiteBold700,
+        style: textStyles,
       ),
     ),
   );

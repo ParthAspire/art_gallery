@@ -8,6 +8,7 @@ import 'package:art_gallery/app/utils/content_properties.dart';
 import 'package:art_gallery/app/utils/loading_widget.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:art_gallery/app/widgets/common_app_bar.dart';
+import 'package:art_gallery/app/widgets/delete_confirm_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -92,7 +93,8 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
       child: StreamBuilder(
         stream: FirebaseServices().fireStore.collection('products').snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          print('snapshot.hasData ::: ${snapshot.data?.size}');
+          if (snapshot.hasData && (snapshot.data?.size ?? 0) > 0) {
             return GridView.builder(
               itemCount: snapshot.data?.docs.length,
               padding: EdgeInsets.symmetric(horizontal: 16),
@@ -169,8 +171,7 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                       visible: controller.userData.value.isAdmin == true,
                       child: Positioned.fill(
                         child: GestureDetector(
-                          onTap: () => controller.deleteProductFromFirebase(
-                              productData.productName ?? ''),
+                          onTap: () => showDeleteProductDialog(productData),
                           child: Align(
                             alignment: Alignment.topRight,
                             child: Container(
@@ -195,10 +196,45 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                 );
               },
             );
+          } else if (snapshot.data?.size == 0) {
+            return Column(children: [
+              SvgPicture.asset(kImgNoProductFound),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 36),
+                child: Text(
+                  kNoProductFound,
+                  style: TextStyles.kH18BlackBold400,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
+              )
+            ]);
+          } else {
+            return Container();
           }
-          return Container();
         },
       ),
+    );
+  }
+
+  showDeleteProductDialog(ProductData productData) {
+    showDialog(
+      context: Get.overlayContext!,
+      builder: (context) {
+        return deleteConfirmDialog(
+            titleText: kProductDeleteText,
+            subTitleText: productData.productName ?? '',
+            productImage: productData.productImage,
+            positiveButtonText: kYes,
+            negativeButtonText: kNo,
+            positiveTap: () {
+              controller
+                  .deleteProductFromFirebase(productData.productName ?? '');
+            },
+            negativeTap: () {
+              Get.back();
+            });
+      },
     );
   }
 }

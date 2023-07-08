@@ -5,6 +5,7 @@ import 'package:art_gallery/app/common/route_constants.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -41,8 +42,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: kColorWhite,
       // 6495ED (CornflowerBlue ), 00BFFF(DeepSkyBlue), 87CEFA(LightSkyBlue )
-      body: Center(
-        child: Image.asset(kIconApp),
+      body: Padding(
+        padding: const EdgeInsets.all(26.0),
+        child: Center(
+          child: SvgPicture.asset(kIconApp),
+        ),
       ),
     );
   }

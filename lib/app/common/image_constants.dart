@@ -8,7 +8,7 @@ const String kIconProfileFilled = '$_iconPath/profile_filled_icon.svg';
 const String kIconProfileUnFilled = '$_iconPath/profile_unfilled_icon.svg';
 
 
-const String kIconApp ='$_iconPath/app_icon.png';
+const String kIconApp ='$_iconPath/app_logo.svg';
 const String kIconNextArrow ='$_iconPath/next_arrow_icon.svg';
 const String kIconBackArrow ='$_iconPath/back_arrow_icon.svg';
 const String kIconGoogle ='$_iconPath/google_icon.svg';
@@ -22,3 +22,5 @@ const String kImgOnBoardingOne = '$_imgPath/on_boarding_img_1.svg';
 const String kImgOnBoardingTwo = '$_imgPath/on_boarding_img_2.svg';
 const String kImgOnBoardingThree = '$_imgPath/on_boarding_img_3.svg';
 const String kImgDefaultProduct = '$_imgPath/default_product_image.svg';
+
+const String kImgNoProductFound = '$_imgPath/no_product_found_image.svg';

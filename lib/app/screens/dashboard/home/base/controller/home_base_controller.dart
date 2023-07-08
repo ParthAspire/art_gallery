@@ -1,4 +1,5 @@
 import 'package:art_gallery/app/common/route_constants.dart';
+import 'package:art_gallery/app/model/product_data.dart';
 import 'package:art_gallery/app/model/user_data.dart';
 import 'package:art_gallery/app/services/firebase_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,5 +39,17 @@ class HomeBaseController extends GetxController {
 
   navigateToAddProductScreen() {
     Get.toNamed(kRouteAddProductScreen);
+  }
+
+  void navigateToProductDetailsScreen({required ProductData productData}) {
+    Get.toNamed(kRouteProductDetailsScreen, arguments: [productData]);
+  }
+
+  deleteProductFromFirebase(String productName) {
+    FirebaseServices()
+        .fireStore
+        .collection('products')
+        .doc(productName)
+        .delete();
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-showLoader() {
+showLoader({Color bgColor = kColorBG }) {
   return Center(
     child: SizedBox(
       height: 50,
@@ -17,7 +17,7 @@ showLoader() {
           strokeWidth: 2,
 
           /// Optional, The stroke of the line, only applicable to widget which contains line
-          backgroundColor: kColorBG,
+          backgroundColor: bgColor,
 
           /// Optional, Background of the widget
           pathBackgroundColor: kColorBlack

@@ -22,6 +22,16 @@ const String kLogout = 'Logout';
 const String kAddProduct = 'Add Product';
 const String kSelectYourBestPicsEver = 'Select your best pics ever!';
 
+/// add product screen labels
+const String kProductName = 'Product Name';
+const String kProductHintName = 'Acrylic Painting';
+const String kProductPrice = 'Product Price';
+const String kProductHintPrice = '26500';
+const String kProductDesc = 'Product Description';
+const String kProductHintDesc =
+    'Acrylic paint is one of the most versatile mediums, and one of the least toxic. It is water-soluble.';
+const String kRupee = 'Rs.';
+
 /// error texts
 const String kErrorGmail = 'Please login with valid credentials';
 

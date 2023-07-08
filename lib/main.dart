@@ -18,8 +18,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    // systemNavigationBarColor: Colors.blue, // navigation bar color
-    statusBarColor: kColorBlack, // status bar color
+  // systemNavigationBarColor: Colors.blue, // navigation bar color
+  statusBarColor: kColorBlack, // status bar color
   ));
   runApp(const MyApp());
 }
@@ -36,7 +36,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
-          appBarTheme: AppBarTheme(backgroundColor: kColorBlack)),
+          appBarTheme: AppBarTheme(
+            backgroundColor: kColorBlack,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: kColorBlack,
+
+            ),
+          )),
       initialBinding: ControllerBindings(),
       home: SplashScreen(),
       routingCallback: (value) {

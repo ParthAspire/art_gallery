@@ -34,6 +34,18 @@ class TextStyles {
     fontWeight: FontWeight.bold,
     fontFamily: fontFamily,
   );
+  static const kH14BlackBold700 = TextStyle(
+    fontSize: kH14FontSize,
+    color: kColorBlack,
+    fontWeight: FontWeight.w700,
+    fontFamily: fontFamily,
+  );
+  static const kH14RedBold700 = TextStyle(
+    fontSize: kH14FontSize,
+    color: kColorRed,
+    fontWeight: FontWeight.w700,
+    fontFamily: fontFamily,
+  );
   static const kH14Grey6ABold400 = TextStyle(
     fontSize: kH14FontSize,
     color: kColorGray6A,

@@ -4,12 +4,19 @@ import 'package:art_gallery/app/model/product_data.dart';
 import 'package:art_gallery/app/services/firebase_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 class AddProductController extends GetxController {
   RxList<File> selectedImages = RxList<File>.empty(growable: true);
+
+  TextEditingController productNameController = TextEditingController();
+  TextEditingController productPriceController = TextEditingController();
+  TextEditingController productDescController = TextEditingController();
+
+  String productName = 'Painting Seven';
 
   @override
   Future<void> onInit() async {
@@ -22,10 +29,18 @@ class AddProductController extends GetxController {
       (value) {
         for (var iData in value) {
           selectedImages.add(File(iData.path));
-          uploadImage(File(iData.path));
+          // uploadImage(File(iData.path));
         }
       },
     );
+  }
+
+  addProductToFirebase() {
+    productName = productNameController.text.trim();
+    for (var iData in selectedImages) {
+      uploadImage(File(iData.path));
+    }
+    Get.back();
   }
 
   Future uploadImage(imageFile) async {
@@ -37,7 +52,7 @@ class AddProductController extends GetxController {
     await FirebaseServices()
         .fireStore
         .collection('products')
-        .doc('Glass Art')
+        .doc(productName)
         .collection('images')
         .doc(fileName)
         .set({'image_url': '', 'time': ''});
@@ -49,7 +64,7 @@ class AddProductController extends GetxController {
       await FirebaseServices()
           .fireStore
           .collection('products')
-          .doc('Glass Art')
+          .doc(productName)
           .collection('images')
           .doc(fileName)
           .delete();
@@ -62,7 +77,7 @@ class AddProductController extends GetxController {
       await FirebaseServices()
           .fireStore
           .collection('products')
-          .doc('Glass Art')
+          .doc(productName)
           .collection('images')
           .doc(fileName)
           .update({'image_url': imageUrl});
@@ -70,7 +85,7 @@ class AddProductController extends GetxController {
       await FirebaseServices()
           .fireStore
           .collection('products')
-          .doc('Glass Art')
+          .doc(productName)
           .update({'product_image': imageUrl});
     }
   }
@@ -90,16 +105,16 @@ class AddProductController extends GetxController {
         await FirebaseServices()
             .fireStore
             .collection('products')
-            .doc('Glass Art')
+            .doc(productName)
             .set(
               ProductData(
                       productCategory: 'Art',
-                      productName: 'Glass Art',
-                      productDesc: '',
-                      productPrice: '20.59',
+                      productName: productName,
+                      productDesc: productDescController.text.trim(),
+                      productPrice: productPriceController.text.trim(),
                       sellerName:
                           FirebaseServices().auth.currentUser?.displayName,
-                      productImage: selectedImages[0].path,
+                      productImage: selectedImages.last.path,
                       time: FieldValue.serverTimestamp().toString())
                   .toJson(),
               // {
@@ -111,5 +126,9 @@ class AddProductController extends GetxController {
             );
       }
     });
+  }
+
+  removeImageFromList(int index) {
+    selectedImages.removeAt(index);
   }
 }

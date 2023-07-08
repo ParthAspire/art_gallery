@@ -1,12 +1,16 @@
 import 'package:art_gallery/app/common/app_constants.dart';
 import 'package:art_gallery/app/common/color_constants.dart';
+import 'package:art_gallery/app/common/image_constants.dart';
 import 'package:art_gallery/app/model/product_data.dart';
 import 'package:art_gallery/app/screens/dashboard/home/base/controller/home_base_controller.dart';
 import 'package:art_gallery/app/services/firebase_services.dart';
+import 'package:art_gallery/app/utils/content_properties.dart';
 import 'package:art_gallery/app/utils/loading_widget.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
+import 'package:art_gallery/app/widgets/common_app_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class HomeBaseScreen extends GetView<HomeBaseController> {
@@ -16,6 +20,23 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: commonAppBar(
+            titleStr: 'Home',
+            onBackTap: () {},
+            isShowBackArrow: false,
+            isCenterTitle: false,
+            actionWidgets: [
+              Visibility(
+                visible: controller.userData.value.isAdmin == true,
+                child: GestureDetector(
+                  onTap: () => controller.navigateToAddProductScreen(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SvgPicture.asset(kImgDefaultProduct, height: 40),
+                  ),
+                ),
+              ),
+            ]),
         body: Stack(
           children: [
             Obx(() {
@@ -32,7 +53,9 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                 ),
               );
             }),
-            addProductContainer(),
+            // Visibility(
+            //     visible: controller.userData.value.isAdmin == true,
+            //     child: addProductContainer()),
             productListView(),
           ],
         ),
@@ -44,19 +67,16 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
     return Column(
       children: [
         Obx(() {
-          return Visibility(
-            visible: controller.userData.value.isAdmin == true,
-            child: GestureDetector(
-              onTap: () => controller.navigateToAddProductScreen(),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(kAddProduct, style: TextStyles.kH18BlackBold),
-                    Icon(Icons.add),
-                  ],
-                ),
+          return GestureDetector(
+            onTap: () => controller.navigateToAddProductScreen(),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(kAddProduct, style: TextStyles.kH18BlackBold),
+                  Icon(Icons.add),
+                ],
               ),
             ),
           );
@@ -67,23 +87,110 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
 
   productListView() {
     return Padding(
-      padding: const EdgeInsets.only(top: 50),
+      padding: EdgeInsets.only(top: 10),
+      // top: controller.userData.value.isAdmin == true ? 50 : 10),
       child: StreamBuilder(
         stream: FirebaseServices().fireStore.collection('products').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
+            return GridView.builder(
               itemCount: snapshot.data?.docs.length,
-              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: .6,
+                  crossAxisSpacing: 10),
               itemBuilder: (context, index) {
                 ProductData productData = ProductData.fromJson(
                     snapshot.data?.docs[index].data() as Map<String, dynamic>);
-                return Row(
+                return Stack(
                   children: [
-                    CachedNetworkImage(
-                        imageUrl: productData.productImage ?? '',
-                        height: 100),
-                    Text(productData.productName ?? ''),
+                    GestureDetector(
+                      onTap: () {
+                        controller.navigateToProductDetailsScreen(
+                            productData: productData);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: kColorBlack),
+                            borderRadius: BorderRadius.circular(kBorderRadius)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(kBorderRadius),
+                              child: CachedNetworkImage(
+                                imageUrl: productData.productImage ?? '',
+                                height: 200,
+                                fit: BoxFit.fill,
+                                width: Get.width,
+                                progressIndicatorBuilder:
+                                    (context, url, progress) {
+                                  return showLoader(
+                                      bgColor: Colors.transparent);
+                                },
+                                errorWidget: (context, url, error) {
+                                  return showLoader(
+                                      bgColor: Colors.transparent);
+                                  // return SvgPicture.asset(kImgDefaultProduct);
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(productData.productName ?? '',
+                                      style: TextStyles.kH18BlackBold),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                            text: 'Price: ',
+                                            style: TextStyles.kH14RedBold700),
+                                        TextSpan(
+                                            text:
+                                                'Rs.${productData.productPrice ?? ''}',
+                                            style: TextStyles.kH14BlackBold700),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: controller.userData.value.isAdmin == true,
+                      child: Positioned.fill(
+                        child: GestureDetector(
+                          onTap: () => controller.deleteProductFromFirebase(
+                              productData.productName ?? ''),
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              margin: EdgeInsets.only(top: 14, right: 8),
+                              padding: EdgeInsets.all(0),
+                              decoration: BoxDecoration(
+                                color: kColorWhite,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: SvgPicture.asset(
+                                kIconDelete,
+                                height: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 );
               },

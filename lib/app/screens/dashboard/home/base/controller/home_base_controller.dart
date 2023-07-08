@@ -45,7 +45,23 @@ class HomeBaseController extends GetxController {
     Get.toNamed(kRouteProductDetailsScreen, arguments: [productData]);
   }
 
-  deleteProductFromFirebase(String productName) {
+  deleteProductFromFirebase(String productName) async {
+    await FirebaseServices()
+        .fireStore
+        .collection('products')
+        .doc(productName)
+        .collection('images')
+        .get()
+        .then((value) {
+      for (DocumentSnapshot iData in value.docs) {
+        FirebaseServices()
+            .firebaseStorage
+            .ref('image')
+            .child('${iData['image_name']}.jpg')
+            .delete();
+        iData.reference.delete();
+      }
+    });
     FirebaseServices()
         .fireStore
         .collection('products')

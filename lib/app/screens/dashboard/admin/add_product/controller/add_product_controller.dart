@@ -55,7 +55,7 @@ class AddProductController extends GetxController {
         .doc(productName)
         .collection('images')
         .doc(fileName)
-        .set({'image_url': '', 'time': ''});
+        .set({'image_url': '', 'time': '', 'image_name': ''});
 
     var ref =
         FirebaseStorage.instance.ref().child('image').child('$fileName.jpg');
@@ -80,7 +80,7 @@ class AddProductController extends GetxController {
           .doc(productName)
           .collection('images')
           .doc(fileName)
-          .update({'image_url': imageUrl});
+          .update({'image_url': imageUrl, 'image_name': fileName});
 
       await FirebaseServices()
           .fireStore

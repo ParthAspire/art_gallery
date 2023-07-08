@@ -28,14 +28,14 @@ deleteConfirmDialog({
         Column(
           children: [
             Visibility(
-              visible:(productImage??'').isNotEmpty ,
+              visible: (productImage ?? '').isNotEmpty,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 14),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(kBorderRadius),
                   child: CachedNetworkImage(
                     imageUrl: productImage ?? '',
-                    height: 200,
+                    height: 250,
                     fit: BoxFit.fill,
                     width: Get.width,
                     progressIndicatorBuilder: (context, url, progress) {
@@ -52,8 +52,8 @@ deleteConfirmDialog({
             Text(titleText, style: TextStyles.kH16WhiteBold700),
             Visibility(
                 visible: (subTitleText ?? '').isNotEmpty,
-                child: Text(subTitleText ?? '',
-                    style: TextStyles.kH18WhiteBold)),
+                child:
+                    Text(subTitleText ?? '', style: TextStyles.kH18WhiteBold)),
           ],
         ),
         Padding(

@@ -230,6 +230,7 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
             positiveTap: () {
               controller
                   .deleteProductFromFirebase(productData.productName ?? '');
+              Get.back();
             },
             negativeTap: () {
               Get.back();

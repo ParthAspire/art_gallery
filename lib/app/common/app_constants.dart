@@ -36,8 +36,13 @@ const String kProductHintName = 'Acrylic Painting';
 const String kProductPrice = 'Product Price';
 const String kProductHintPrice = '26500';
 const String kProductDesc = 'Product Description';
+const String kProduct = 'Product';
+const String kPrice = 'Price';
+const String kSeller = 'Seller';
+const String kCategory = 'Category';
 const String kProductHintDesc =
     'Acrylic paint is one of the most versatile mediums, and one of the least toxic. It is water-soluble.';
+const String kFollowOn  ='Follow on';
 const String kRupee = 'Rs.';
 
 /// error labels

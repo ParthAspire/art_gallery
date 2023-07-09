@@ -46,14 +46,15 @@ class AddProductScreen extends GetView<AddProductController> {
                       controller: controller.productDescController,
                       hintText: kProductHintDesc,
                       labelText: kProductDesc,
-                      preFixText: kRupee,
                       maxLines: 3),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 50),
-                  child: primaryButton(onPress: () {
-                    controller.addProductToFirebase();
-                  }, buttonTxt: kAddProduct),
+                  child: primaryButton(
+                      onPress: () {
+                        controller.addProductToFirebase();
+                      },
+                      buttonTxt: kAddProduct),
                 ),
               ],
             ),

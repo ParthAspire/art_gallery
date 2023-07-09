@@ -16,6 +16,7 @@ const String kIconLogout ='$_iconPath/logout_icon.svg';
 const String kIconUploadImage ='$_iconPath/upload_image_icon.svg';
 const String kIconDelete ='$_iconPath/delete_icon.svg';
 const String kIconProfileDetails ='$_iconPath/profile_details_icon.svg';
+const String kIconInstagram ='$_iconPath/instagram_icon.svg';
 
 const String kImgLogin = '$_imgPath/login_img.svg';
 const String kImgOnBoardingOne = '$_imgPath/on_boarding_img_1.svg';

@@ -3,6 +3,7 @@ import 'package:art_gallery/app/common/color_constants.dart';
 import 'package:art_gallery/app/common/image_constants.dart';
 import 'package:art_gallery/app/screens/dashboard/product/product_details/controller/product_details_controller.dart';
 import 'package:art_gallery/app/services/firebase_services.dart';
+import 'package:art_gallery/app/services/url_launcher_services.dart';
 import 'package:art_gallery/app/utils/content_properties.dart';
 import 'package:art_gallery/app/utils/loading_widget.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
@@ -24,16 +25,32 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(
-          titleStr: controller.productData.value.productName ?? '',
-          onBackTap: () {
-            Get.back();
-          }),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          imageSliderView(),
-          productInfoContainer(),
-        ],
+        titleStr: '', //  controller.productData.value.productName ?? ''
+        onBackTap: () {
+          Get.back();
+        },
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            imageSliderView(),
+            productInfoContainer(),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+              child: Row(
+                children: [
+                  Text('$kFollowOn :    ', style: TextStyles.kH14BlackBold700),
+                  GestureDetector(
+                      onTap: () => UrlLauncherServices().openInstagram(
+                          'https://www.instagram.com/accounts/login/?next=https%3A%2F%2Fwww.instagram.com%2F'),
+                      child: SvgPicture.asset(kIconInstagram, height: 40)),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -76,7 +93,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Container(
-            height: Get.height / 2.2,
+            height: Get.height / 2.3,
             // margin: EdgeInsets.only(top: 16, left: 16),
             padding: EdgeInsets.only(top: 16, left: 16, bottom: 16),
             decoration: BoxDecoration(
@@ -188,55 +205,78 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
   }
 
   productInfoContainer() {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-            // color: kColorGrayE0,
-            // borderRadius: BorderRadius.only(
-            //     topLeft: Radius.circular(kBorderRadius),
-            //     topRight: Radius.circular(kBorderRadius)),
+    return Container(
+      decoration: BoxDecoration(
+          // color: kColorGrayE0,
+          // borderRadius: BorderRadius.only(
+          //     topLeft: Radius.circular(kBorderRadius),
+          //     topRight: Radius.circular(kBorderRadius)),
+          ),
+      child: Padding(
+        padding: const EdgeInsets.all(kHorizontalPadding),
+        child: Column(
+          children: [
+            IgnorePointer(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: commonTextField(
+                  controller: controller.productNameController,
+                  hintText: kProduct,
+                  labelText: kProduct,
+                ),
+              ),
             ),
-        child: Padding(
-          padding: const EdgeInsets.all(kHorizontalPadding),
-          child: Column(
-            children: [
-              IgnorePointer(
+            IgnorePointer(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: Get.width * .4,
+                    child: commonTextField(
+                      controller: controller.productPriceController,
+                      hintText: kPrice,
+                      labelText: kPrice,
+                      preFixText: kRupee,
+                      keyboardType: TextInputType.phone,
+                    ),
+                  ),
+                  SizedBox(
+                    width: Get.width * .4,
+                    child: commonTextField(
+                      controller: controller.catNameController,
+                      hintText: kCategory,
+                      labelText: kCategory,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            IgnorePointer(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: commonTextField(
+                  controller: controller.sellerNameController,
+                  hintText: kSeller,
+                  labelText: kSeller,
+                ),
+              ),
+            ),
+            Visibility(
+              visible: controller.productDescController.text.trim().isNotEmpty,
+              child: IgnorePointer(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: commonTextField(
-                    controller: controller.productNameController,
-                    hintText: kProductHintName,
-                    labelText: kProductName,
+                    controller: controller.productDescController,
+                    hintText: kProductHintDesc,
+                    labelText: kProductDesc,
+                    preFixText: kRupee,
+                    maxLines: 3,
                   ),
                 ),
               ),
-              IgnorePointer(
-                child: commonTextField(
-                  controller: controller.productPriceController,
-                  hintText: kProductHintPrice,
-                  labelText: kProductPrice,
-                  preFixText: kRupee,
-                  keyboardType: TextInputType.phone,
-                ),
-              ),
-              Visibility(
-                visible:
-                    controller.productDescController.text.trim().isNotEmpty,
-                child: IgnorePointer(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: commonTextField(
-                      controller: controller.productDescController,
-                      hintText: kProductHintDesc,
-                      labelText: kProductDesc,
-                      preFixText: kRupee,
-                      maxLines: 3,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

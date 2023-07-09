@@ -123,7 +123,7 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                           children: [
                             ClipRRect(
                               borderRadius:
-                              BorderRadius.circular(kBorderRadius),
+                                  BorderRadius.circular(kBorderRadius),
                               child: CachedNetworkImage(
                                 imageUrl: productData.productImage ?? '',
                                 height: 200,
@@ -147,7 +147,9 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(productData.productName ?? '',
-                                      style: TextStyles.kH18BlackBold),
+                                      style: TextStyles.kH18BlackBold,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis),
                                   RichText(
                                     text: TextSpan(
                                       children: [
@@ -156,8 +158,7 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                                             style: TextStyles.kH14RedBold700),
                                         TextSpan(
                                             text:
-                                            'Rs.${productData.productPrice ??
-                                                ''}',
+                                                'Rs.${productData.productPrice ?? ''}',
                                             style: TextStyles.kH14BlackBold700),
                                       ],
                                     ),

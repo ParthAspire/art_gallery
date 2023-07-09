@@ -6,6 +6,8 @@ class ProductDetailsController extends GetxController {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   TextEditingController productDescController = TextEditingController();
+  TextEditingController catNameController = TextEditingController();
+  TextEditingController sellerNameController = TextEditingController();
 
   Rx<ProductData> productData = ProductData().obs;
 
@@ -17,6 +19,8 @@ class ProductDetailsController extends GetxController {
       productNameController.text  = productData.value.productName ?? '';
       productPriceController.text  = productData.value.productPrice ?? '';
       productDescController.text  = productData.value.productDesc ?? '';
+      catNameController.text  = productData.value.productCategory ?? '';
+      sellerNameController.text  = productData.value.sellerName ?? '';
     } catch (e) {
       debugPrint('product details setIntentData ::: $e');
     }

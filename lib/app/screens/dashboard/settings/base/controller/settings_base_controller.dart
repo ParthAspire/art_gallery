@@ -46,10 +46,16 @@ class SettingsBaseController extends GetxController {
   }
 
   void navigateToScreen(int index) {
-    if (index == 0 && userData.isAdmin == true) {
-      navigateToUserListingScreen();
-    } else if (index == 0 && userData.isAdmin == false) {
-      navigateToPersonalDetailsScreen();
+    if (userData.isAdmin == true) {
+      if (index == 0) {
+        navigateToUserListingScreen();
+      } else if (index == 1) {
+        navigateToPersonalDetailsScreen();
+      }
+    } else if (userData.isAdmin == false) {
+      if (index == 0) {
+        navigateToPersonalDetailsScreen();
+      }
     }
   }
 
@@ -57,7 +63,9 @@ class SettingsBaseController extends GetxController {
     Get.toNamed(kRouteUsersListingScreen);
   }
 
-  void navigateToPersonalDetailsScreen() {}
+  void navigateToPersonalDetailsScreen() {
+    Get.toNamed(kRoutePersonalDetailsScreen);
+  }
 }
 
 class SettingsListClass {

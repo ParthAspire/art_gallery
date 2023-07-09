@@ -7,6 +7,7 @@ import 'package:art_gallery/app/screens/dashboard/admin/add_product/view/add_pro
 import 'package:art_gallery/app/screens/dashboard/bottom_nav/view/bottom_nav_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/home/base/view/home_base_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/product/product_details/view/product_details_screen.dart';
+import 'package:art_gallery/app/screens/dashboard/settings/personal_details/view/personal_details_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/settings/users_listing/view/user_listing_screen.dart';
 import 'package:art_gallery/app/screens/on_boarding/view/on_boarding_screen.dart';
 import 'package:art_gallery/app/screens/splash_screen/view/splash_screen.dart';
@@ -69,6 +70,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: kRouteProductDetailsScreen,
           page: () => ProductDetailsScreen(),
+        ),
+        GetPage(
+          name: kRoutePersonalDetailsScreen,
+          page: () => PersonalDetailsScreen(),
         ),
 
         /// admin

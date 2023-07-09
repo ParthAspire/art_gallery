@@ -5,6 +5,7 @@ const String kRouteBottomNavScreen = '/BottomNavScreen';
 
 const String kRouteHomeBaseScreen = '/HomeBaseScreen';
 const String kRouteProductDetailsScreen = '/ProductDetailsScreen';
+const String kRoutePersonalDetailsScreen = '/PersonalDetailsScreen';
 
 /// admin
 const String kRouteAddProductScreen = '/AddProductScreen';

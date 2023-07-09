@@ -40,8 +40,13 @@ const String kProductHintDesc =
     'Acrylic paint is one of the most versatile mediums, and one of the least toxic. It is water-soluble.';
 const String kRupee = 'Rs.';
 
-/// error texts
+/// error labels
 const String kErrorGmail = 'Please login with valid credentials';
+
+
+/// personal details screen labels
+const String kPersonName ='Person Name';
+const String kEmail ='Email';
 
 class AppConstants {
   static int userId = 0;

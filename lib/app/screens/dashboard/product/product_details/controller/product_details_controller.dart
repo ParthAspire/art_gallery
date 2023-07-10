@@ -1,3 +1,4 @@
+import 'package:art_gallery/app/common/route_constants.dart';
 import 'package:art_gallery/app/model/product_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,5 +25,14 @@ class ProductDetailsController extends GetxController {
     } catch (e) {
       debugPrint('product details setIntentData ::: $e');
     }
+  }
+
+  navigateToFullScreenImage({required var imageUrlList ,required int lenght}) {
+    List<String> imageList = [];
+
+    for(int i=0;i<lenght;i++){
+      imageList.add(imageUrlList[i]['image_url']);
+    }
+    Get.toNamed(kRouteFullScreenImage,arguments: [productData.value.productName ?? '',imageList]);
   }
 }

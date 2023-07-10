@@ -26,7 +26,7 @@ class SettingsBaseScreen extends GetView<SettingsBaseController> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(kMyProfile, style: TextStyles.kH28WhiteBold),
+          title: Text(kMyProfile, style: TextStyles.kH24WhiteBold),
           backgroundColor: kColorBlack,
         ),
         body: Stack(

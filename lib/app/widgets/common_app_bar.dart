@@ -9,14 +9,15 @@ AppBar commonAppBar(
     required Function onBackTap,
     bool isShowBackArrow = true,
     bool isCenterTitle = true,
-    List<Widget>? actionWidgets }) {
+    List<Widget>? actionWidgets}) {
   return AppBar(
     automaticallyImplyLeading: isShowBackArrow ? false : true,
     leadingWidth: isShowBackArrow ? 60 : 16,
     titleSpacing: 0,
     backgroundColor: kColorBlack,
     centerTitle: isCenterTitle,
-    title: Text(titleStr, style: TextStyles.kH28WhiteBold),
+    title: Text(titleStr, style: TextStyles.kH24WhiteBold),
+    // kH28WhiteBold
     leading: isShowBackArrow
         ? GestureDetector(
             onTap: () {
@@ -37,6 +38,6 @@ AppBar commonAppBar(
             ),
           )
         : SizedBox(),
-    actions: actionWidgets??[],
+    actions: actionWidgets ?? [],
   );
 }

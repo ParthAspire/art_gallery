@@ -12,6 +12,10 @@ class HomeBaseController extends GetxController {
   Rx<UserData> userData = UserData().obs;
   RxBool isShowLoader = true.obs;
 
+  TextEditingController searchController = TextEditingController();
+  RxString searchText = ''.obs;
+  RxBool isSearchEnable = false.obs;
+
   @override
   void onInit() {
     getUserInfo();

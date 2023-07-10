@@ -2,6 +2,7 @@ import 'package:art_gallery/app/screens/auth/login/controller/login_controller.d
 import 'package:art_gallery/app/screens/dashboard/admin/add_product/controller/add_product_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/bottom_nav/controller/bottom_nav_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/home/base/controller/home_base_controller.dart';
+import 'package:art_gallery/app/screens/dashboard/product/full_screen_image/controller/full_screen_image_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/product/product_details/controller/product_details_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/settings/base/controller/settings_base_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/settings/personal_details/controller/personal_details_controller.dart';
@@ -24,6 +25,8 @@ class ControllerBindings implements Bindings {
     Get.lazyPut<ProductDetailsController>(() => ProductDetailsController(),
         fenix: true);
     Get.lazyPut<PersonalDetailsController>(() => PersonalDetailsController(),
+        fenix: true);
+    Get.lazyPut<FullScreenImageController>(() => FullScreenImageController(),
         fenix: true);
 
     /// admin

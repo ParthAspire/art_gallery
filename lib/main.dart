@@ -6,6 +6,7 @@ import 'package:art_gallery/app/screens/auth/login/view/login_view.dart';
 import 'package:art_gallery/app/screens/dashboard/admin/add_product/view/add_product_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/bottom_nav/view/bottom_nav_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/home/base/view/home_base_screen.dart';
+import 'package:art_gallery/app/screens/dashboard/product/full_screen_image/view/full_screen_image.dart';
 import 'package:art_gallery/app/screens/dashboard/product/product_details/view/product_details_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/settings/personal_details/view/personal_details_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/settings/users_listing/view/user_listing_screen.dart';
@@ -74,6 +75,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: kRoutePersonalDetailsScreen,
           page: () => PersonalDetailsScreen(),
+        ),
+        GetPage(
+          name: kRouteFullScreenImage,
+          page: () => FullScreenImage(),
         ),
 
         /// admin

@@ -14,6 +14,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
   ProductDetailsScreen({super.key}) {
@@ -37,11 +38,11 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
             imageSliderView(),
             productInfoContainer(),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+              padding: const EdgeInsets.only(left: 26, bottom: 30),
               child: Row(
                 children: [
-                  Text('$kFollowOn :    ', style: TextStyles.kH14BlackBold700),
+                  const Text('$kFollowOn :    ',
+                      style: TextStyles.kH14BlackBold700),
                   GestureDetector(
                       onTap: () => UrlLauncherServices().openInstagram(
                           'https://www.instagram.com/accounts/login/?next=https%3A%2F%2Fwww.instagram.com%2F'),
@@ -112,16 +113,34 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                         padding: const EdgeInsets.only(right: 8),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(kBorderRadius),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                snapshot.data?.docs[index]['image_url'] ?? '',
-                            progressIndicatorBuilder: (context, url, progress) {
-                              return showLoader(bgColor: Colors.transparent);
-                            },
-                            errorWidget: (context, url, error) {
-                              return SvgPicture.asset(kImgDefaultProduct);
-                            },
+
+                          child: InstaImageViewer(
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  snapshot.data?.docs[index]['image_url'] ?? '',
+                              height: 500,
+                              width: 300,
+                              progressIndicatorBuilder:
+                                  (context, url, progress) {
+                                return showLoader(bgColor: Colors.transparent);
+                              },
+                              errorWidget: (context, url, error) {
+                                return SvgPicture.asset(kImgDefaultProduct);
+                              },
+                            ),
                           ),
+
+                          // child: CachedNetworkImage(
+                          //   imageUrl:
+                          //   snapshot.data?.docs[index]['image_url'] ?? '',
+                          //   progressIndicatorBuilder:
+                          //       (context, url, progress) {
+                          //     return showLoader(bgColor: Colors.transparent);
+                          //   },
+                          //   errorWidget: (context, url, error) {
+                          //     return SvgPicture.asset(kImgDefaultProduct);
+                          //   },
+                          // ),
                         ),
                       );
                     },
@@ -264,15 +283,11 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
             Visibility(
               visible: controller.productDescController.text.trim().isNotEmpty,
               child: IgnorePointer(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: commonTextField(
-                    controller: controller.productDescController,
-                    hintText: kProductHintDesc,
-                    labelText: kProductDesc,
-                    preFixText: kRupee,
-                    maxLines: 3,
-                  ),
+                child: commonTextField(
+                  controller: controller.productDescController,
+                  hintText: kProductHintDesc,
+                  labelText: kProductDesc,
+                  maxLines: 2,
                 ),
               ),
             ),

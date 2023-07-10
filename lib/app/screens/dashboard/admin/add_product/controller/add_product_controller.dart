@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:art_gallery/app/common/app_constants.dart';
 import 'package:art_gallery/app/model/product_data.dart';
 import 'package:art_gallery/app/services/firebase_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,11 +37,25 @@ class AddProductController extends GetxController {
   }
 
   addProductToFirebase() {
+    bool isProductNameExist = false;
     productName = productNameController.text.trim();
-    for (var iData in selectedImages) {
-      uploadImage(File(iData.path));
+    FirebaseServices()
+        .fireStore
+        .collection('products')
+        .where('product_name', isEqualTo: productName)
+        .get()
+        .then((value) {
+      value.size > 0 ? isProductNameExist = true : isProductNameExist = false;
+    });
+    if (isProductNameExist) {
+      for (var iData in selectedImages) {
+        uploadImage(File(iData.path));
+      }
+      Get.back();
+    } else {
+      Get.snackbar(productName, kProductNameAlreadyExist,
+          snackPosition: SnackPosition.BOTTOM);
     }
-    Get.back();
   }
 
   Future uploadImage(imageFile) async {

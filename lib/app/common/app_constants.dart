@@ -43,6 +43,7 @@ const String kSeller = 'Seller';
 const String kCategory = 'Category';
 const String kProductHintDesc =
     'Acrylic paint is one of the most versatile mediums, and one of the least toxic. It is water-soluble.';
+const String kProductNameAlreadyExist = 'This product name is already exist';
 const String kFollowOn  ='Follow on';
 const String kRupee = 'Rs.';
 

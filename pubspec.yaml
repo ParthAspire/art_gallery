@@ -32,6 +32,7 @@ dependencies:
 
   zoom_widget: ^2.0.1
   insta_image_viewer: ^1.0.2
+  easy_image_viewer: ^1.2.1
 
 dev_dependencies:
   flutter_test:

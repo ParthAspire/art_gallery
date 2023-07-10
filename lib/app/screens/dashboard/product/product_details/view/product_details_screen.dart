@@ -11,6 +11,7 @@ import 'package:art_gallery/app/widgets/common_app_bar.dart';
 import 'package:art_gallery/app/widgets/common_textfield_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_image_viewer/easy_image_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -111,36 +112,46 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                     itemBuilder: (context, index, realIndex) {
                       return Padding(
                         padding: const EdgeInsets.only(right: 8),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(kBorderRadius),
+                        // child: ClipRRect(
+                        //   borderRadius: BorderRadius.circular(kBorderRadius),
+                        //
+                        //   child: InstaImageViewer(
+                        //     child: CachedNetworkImage(
+                        //       imageUrl:
+                        //           snapshot.data?.docs[index]['image_url'] ?? '',
+                        //       height: 500,
+                        //       width: 300,
+                        //       progressIndicatorBuilder:
+                        //           (context, url, progress) {
+                        //         return showLoader(bgColor: Colors.transparent);
+                        //       },
+                        //       errorWidget: (context, url, error) {
+                        //         return SvgPicture.asset(kImgDefaultProduct);
+                        //       },
+                        //     ),
+                        //   ),
 
-                          child: InstaImageViewer(
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  snapshot.data?.docs[index]['image_url'] ?? '',
-                              height: 500,
-                              width: 300,
-                              progressIndicatorBuilder:
-                                  (context, url, progress) {
-                                return showLoader(bgColor: Colors.transparent);
-                              },
-                              errorWidget: (context, url, error) {
-                                return SvgPicture.asset(kImgDefaultProduct);
-                              },
-                            ),
+                        child: GestureDetector(
+                          onTap: () {
+                            final imageProvider = Image.network(
+                                    snapshot.data?.docs[index]['image_url'] ??
+                                        '')
+                                .image;
+
+                            showImageViewer(context, imageProvider,
+                                doubleTapZoomable: true,
+                                onViewerDismissed: () {});
+                          },
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                snapshot.data?.docs[index]['image_url'] ?? '',
+                            progressIndicatorBuilder: (context, url, progress) {
+                              return showLoader(bgColor: Colors.transparent);
+                            },
+                            errorWidget: (context, url, error) {
+                              return SvgPicture.asset(kImgDefaultProduct);
+                            },
                           ),
-
-                          // child: CachedNetworkImage(
-                          //   imageUrl:
-                          //   snapshot.data?.docs[index]['image_url'] ?? '',
-                          //   progressIndicatorBuilder:
-                          //       (context, url, progress) {
-                          //     return showLoader(bgColor: Colors.transparent);
-                          //   },
-                          //   errorWidget: (context, url, error) {
-                          //     return SvgPicture.asset(kImgDefaultProduct);
-                          //   },
-                          // ),
                         ),
                       );
                     },

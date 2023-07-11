@@ -16,12 +16,22 @@ class AddProductController extends GetxController {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   TextEditingController productDescController = TextEditingController();
+  TextEditingController productCategoryController = TextEditingController();
 
   String productName = 'Painting Seven';
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    setDefaultCategory();
+  }
+
+  setDefaultCategory() {
+    try {
+      productCategoryController.text = FirebaseServices().fireStore.collection('categories').doc('All').id;
+    } catch (e) {
+      debugPrint('setDefaultCategory :: $e');
+    }
   }
 
   Future<void> selectImageFromGallery() async {

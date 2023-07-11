@@ -98,12 +98,12 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
             height: Get.height / 2.3,
             // margin: EdgeInsets.only(top: 16, left: 16),
             padding: EdgeInsets.only(top: 16, left: 16, bottom: 16),
-            decoration: BoxDecoration(
-              color: kColorGrayE0,
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(kBorderRadius),
-                  bottomLeft: Radius.circular(kBorderRadius)),
-            ),
+            // decoration: BoxDecoration(
+            //   color: kColorGrayE0,
+            //   borderRadius: BorderRadius.only(
+            //       bottomRight: Radius.circular(kBorderRadius),
+            //       bottomLeft: Radius.circular(kBorderRadius)),
+            // ),
             child: Column(
               children: [
                 Expanded(
@@ -236,75 +236,122 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 
   productInfoContainer() {
     return Container(
+      height: Get.height * .7,
       decoration: BoxDecoration(
-          // color: kColorGrayE0,
-          // borderRadius: BorderRadius.only(
-          //     topLeft: Radius.circular(kBorderRadius),
-          //     topRight: Radius.circular(kBorderRadius)),
-          ),
-      child: Padding(
-        padding: const EdgeInsets.all(kHorizontalPadding),
-        child: Column(
-          children: [
-            IgnorePointer(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: commonTextField(
-                  controller: controller.productNameController,
-                  hintText: kProduct,
-                  labelText: kProduct,
+        color: kColorBG,
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(26), topLeft: Radius.circular(26)),
+      ),
+      padding: const EdgeInsets.symmetric(
+          horizontal: kHorizontalPadding, vertical: 26),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: Get.width * .65,
+                child: Text(
+                  controller.productData.value.productName ?? '',
+                  style: TextStyles.kH24BlackBold,
+                  maxLines: 2,
                 ),
               ),
-            ),
-            IgnorePointer(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Text('$kRupee ${controller.productData.value.productPrice ?? ''}',
+                  style: TextStyles.kH18BlackBold400),
+            ],
+          ),
+          Row(
+            children: [
+              // Text('$kCategory : ', style: TextStyles.kH16BlackBold400),
+              Text(controller.productData.value.productCategory ?? '',
+                  style: TextStyles.kH16BlackBold400),
+            ],
+          ),
+          Visibility(
+            visible: controller.productDescController.text.trim().isNotEmpty,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 36),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: Get.width * .4,
-                    child: commonTextField(
-                      controller: controller.productPriceController,
-                      hintText: kPrice,
-                      labelText: kPrice,
-                      preFixText: kRupee,
-                      keyboardType: TextInputType.phone,
-                    ),
-                  ),
-                  SizedBox(
-                    width: Get.width * .4,
-                    child: commonTextField(
-                      controller: controller.catNameController,
-                      hintText: kCategory,
-                      labelText: kCategory,
-                    ),
+                  Text(kDescription, style: TextStyles.kH18BlackBold700),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(controller.productData.value.productDesc ?? '',
+                        style: TextStyles.kH16BlackBold400),
                   ),
                 ],
               ),
             ),
-            IgnorePointer(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: commonTextField(
-                  controller: controller.sellerNameController,
-                  hintText: kSeller,
-                  labelText: kSeller,
-                ),
-              ),
-            ),
-            Visibility(
-              visible: controller.productDescController.text.trim().isNotEmpty,
-              child: IgnorePointer(
-                child: commonTextField(
-                  controller: controller.productDescController,
-                  hintText: kProductHintDesc,
-                  labelText: kProductDesc,
-                  maxLines: 2,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
+      // Padding(
+      //   padding: const EdgeInsets.all(kHorizontalPadding),
+      //   child: Column(
+      //     children: [
+      //       IgnorePointer(
+      //         child: Padding(
+      //           padding: const EdgeInsets.symmetric(vertical: 16),
+      //           child: commonTextField(
+      //             controller: controller.productNameController,
+      //             hintText: kProduct,
+      //             labelText: kProduct,
+      //           ),
+      //         ),
+      //       ),
+      //       IgnorePointer(
+      //         child: Row(
+      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //           children: [
+      //             SizedBox(
+      //               width: Get.width * .4,
+      //               child: commonTextField(
+      //                 controller: controller.productPriceController,
+      //                 hintText: kPrice,
+      //                 labelText: kPrice,
+      //                 preFixText: kRupee,
+      //                 keyboardType: TextInputType.phone,
+      //               ),
+      //             ),
+      //             SizedBox(
+      //               width: Get.width * .4,
+      //               child: commonTextField(
+      //                 controller: controller.catNameController,
+      //                 hintText: kCategory,
+      //                 labelText: kCategory,
+      //               ),
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //       IgnorePointer(
+      //         child: Padding(
+      //           padding: const EdgeInsets.symmetric(vertical: 16),
+      //           child: commonTextField(
+      //             controller: controller.sellerNameController,
+      //             hintText: kSeller,
+      //             labelText: kSeller,
+      //           ),
+      //         ),
+      //       ),
+      //       Visibility(
+      //         visible: controller.productDescController.text.trim().isNotEmpty,
+      //         child: IgnorePointer(
+      //           child: commonTextField(
+      //             controller: controller.productDescController,
+      //             hintText: kProductHintDesc,
+      //             labelText: kProductDesc,
+      //             maxLines: 2,
+      //           ),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

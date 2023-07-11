@@ -92,43 +92,43 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
     return Padding(
       padding: EdgeInsets.only(top: 10),
       // top: controller.userData.value.isAdmin == true ? 50 : 10),
-      child:
-         StreamBuilder(
-          stream:
-              FirebaseServices().fireStore.collection('products').snapshots(),
-          builder: (context, snapshot) {
-            print('snapshot.hasData ::: ${snapshot.data?.size}');
-            if (snapshot.hasData && (snapshot.data?.size ?? 0) > 0) {
-              return GridView.builder(
-                itemCount: snapshot.data?.docs.length,
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: .6,
-                    crossAxisSpacing: 10),
-                itemBuilder: (context, index) {
-                  ProductData productData = ProductData.fromJson(
-                      snapshot.data?.docs[index].data()
-                          as Map<String, dynamic>);
-                  return Stack(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          controller.navigateToProductDetailsScreen(
-                              productData: productData);
-                        },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: kColorBlack),
-                              borderRadius:
-                                  BorderRadius.circular(kBorderRadius)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
+      child: StreamBuilder(
+        stream: FirebaseServices().fireStore.collection('products').snapshots(),
+        builder: (context, snapshot) {
+          print('snapshot.hasData ::: ${snapshot.data?.size}');
+          if (snapshot.hasData && (snapshot.data?.size ?? 0) > 0) {
+            return GridView.builder(
+              itemCount: snapshot.data?.docs.length,
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: .62,
+                  crossAxisSpacing: 10),
+              itemBuilder: (context, index) {
+                ProductData productData = ProductData.fromJson(
+                    snapshot.data?.docs[index].data() as Map<String, dynamic>);
+                return Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        controller.navigateToProductDetailsScreen(
+                            productData: productData);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 10),
+                        // decoration: BoxDecoration(
+                        //     border: Border.all(color: kColorBlack, width: .5),
+                        //     borderRadius: BorderRadius.circular(kBorderRadius)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: kColorBlack, width: .5),
+                                  borderRadius: BorderRadius.circular(kBorderRadius)),
+                              child: ClipRRect(
                                 borderRadius:
-                                    BorderRadius.circular(kBorderRadius),
+                                BorderRadius.circular(kBorderRadius),
                                 child: CachedNetworkImage(
                                   imageUrl: productData.productImage ?? '',
                                   height: 200,
@@ -146,84 +146,84 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                                   },
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(productData.productName ?? '',
-                                        style: TextStyles.kH18BlackBold,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                    RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                              text: 'Price: ',
-                                              style: TextStyles.kH14RedBold700),
-                                          TextSpan(
-                                              text:
-                                                  'Rs.${productData.productPrice ?? ''}',
-                                              style:
-                                                  TextStyles.kH14BlackBold700),
-                                        ],
-                                      ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(productData.productName ?? '',
+                                      style: TextStyles.kH18BlackBold,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                            text: 'Price: ',
+                                            style: TextStyles.kH14RedBold700),
+                                        TextSpan(
+                                            text:
+                                            'Rs.${productData.productPrice ??
+                                                ''}',
+                                            style: TextStyles.kH14BlackBold700),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                      Visibility(
-                        visible: controller.userData.value.isAdmin == true,
-                        child: Positioned.fill(
-                          child: GestureDetector(
-                            onTap: () => showDeleteProductDialog(productData),
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                height: 30,
-                                width: 30,
-                                margin: EdgeInsets.only(top: 14, right: 8),
-                                padding: EdgeInsets.all(0),
-                                decoration: BoxDecoration(
-                                  color: kColorWhite,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: SvgPicture.asset(
-                                  kIconDelete,
-                                  height: 20,
-                                ),
+                    ),
+                    Visibility(
+                      visible: controller.userData.value.isAdmin == true,
+                      child: Positioned.fill(
+                        child: GestureDetector(
+                          onTap: () => showDeleteProductDialog(productData),
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              height: 30,
+                              width: 30,
+                              margin: EdgeInsets.only(top: 14, right: 8),
+                              padding: EdgeInsets.all(0),
+                              decoration: BoxDecoration(
+                                color: kColorWhite,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: SvgPicture.asset(
+                                kIconDelete,
+                                height: 20,
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  );
-                },
-              );
-            } else if (snapshot.data?.size == 0) {
-              return Column(children: [
-                SvgPicture.asset(kImgNoProductFound),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 36),
-                  child: Text(
-                    kNoProductFound,
-                    style: TextStyles.kH18BlackBold400,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ]);
-            } else {
-              return Container();
-            }
-          },
-        ),
-
+                    ),
+                  ],
+                );
+              },
+            );
+          } else if (snapshot.data?.size == 0) {
+            return Column(children: [
+              SvgPicture.asset(kImgNoProductFound),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 36),
+                child: Text(
+                  kNoProductFound,
+                  style: TextStyles.kH18BlackBold400,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
+              )
+            ]);
+          } else {
+            return Container();
+          }
+        },
+      ),
     );
   }
 

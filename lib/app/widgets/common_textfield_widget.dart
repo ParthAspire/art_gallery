@@ -16,7 +16,9 @@ Widget commonTextField(
     double elevation = 8.0,
     int maxLines = 1,
     double contentPadding = 15,
+    Function? onTap,
     bool enabled = true,
+    bool readOnly = false,
     //    Function(String)? validator,
     bool prefixIconVisible = true}) {
   return Material(
@@ -34,6 +36,12 @@ Widget commonTextField(
       focusNode: focusNode,
       onChanged: onChanged,
       cursorColor: kColorBlack,
+      readOnly: readOnly,
+      onTap: () {
+        try {
+          onTap!();
+        } catch (e) {}
+      },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(contentPadding),
         hintText: hintText,

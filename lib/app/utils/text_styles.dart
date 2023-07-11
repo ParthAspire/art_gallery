@@ -61,6 +61,12 @@ class TextStyles {
     fontWeight: FontWeight.w700,
     fontFamily: fontFamily,
   );
+  static const kH16BlackBold400 = TextStyle(
+    fontSize: kH16FontSize,
+    color: kColorBlack,
+    fontWeight: FontWeight.w400,
+    fontFamily: fontFamily,
+  );
   static const kH16WhiteBold700 = TextStyle(
     fontSize: kH16FontSize,
     color: kColorWhite,
@@ -102,6 +108,12 @@ class TextStyles {
     fontSize: kH18FontSize,
     color: kColorBlack,
     fontWeight: FontWeight.bold,
+    fontFamily: fontFamily,
+  );
+  static const kH18BlackBold700 = TextStyle(
+    fontSize: kH18FontSize,
+    color: kColorBlack,
+    fontWeight: FontWeight.w700,
     fontFamily: fontFamily,
   );
   static const kH18BlackBold400 = TextStyle(

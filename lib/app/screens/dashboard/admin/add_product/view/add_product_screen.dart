@@ -2,7 +2,9 @@ import 'package:art_gallery/app/common/app_constants.dart';
 import 'package:art_gallery/app/common/color_constants.dart';
 import 'package:art_gallery/app/common/image_constants.dart';
 import 'package:art_gallery/app/screens/dashboard/admin/add_product/controller/add_product_controller.dart';
+import 'package:art_gallery/app/services/firebase_services.dart';
 import 'package:art_gallery/app/utils/content_properties.dart';
+import 'package:art_gallery/app/utils/loading_widget.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:art_gallery/app/widgets/common_textfield_widget.dart';
 import 'package:art_gallery/app/widgets/primary_button.dart';
@@ -35,19 +37,27 @@ class AddProductScreen extends GetView<AddProductController> {
                       labelText: kProductName),
                 ),
                 commonTextField(
-                    controller: controller.productPriceController,
-                    hintText: kProductHintPrice,
-                    labelText: kProductPrice,
-                    preFixText: kRupee,
-                    keyboardType: TextInputType.phone),
+                    controller: controller.productCategoryController,
+                    hintText: kCategory,
+                    labelText: kCategory,
+                    readOnly: true,
+                    onTap: () {
+                      showCategoryBottomSheet();
+                    }),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: commonTextField(
-                      controller: controller.productDescController,
-                      hintText: kProductHintDesc,
-                      labelText: kProductDesc,
-                      maxLines: 3),
+                      controller: controller.productPriceController,
+                      hintText: kProductHintPrice,
+                      labelText: kProductPrice,
+                      preFixText: kRupee,
+                      keyboardType: TextInputType.phone),
                 ),
+                commonTextField(
+                    controller: controller.productDescController,
+                    hintText: kProductHintDesc,
+                    labelText: kProductDesc,
+                    maxLines: 3),
                 Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: primaryButton(
@@ -171,5 +181,107 @@ class AddProductScreen extends GetView<AddProductController> {
         ),
       );
     });
+  }
+
+  void showCategoryBottomSheet() {
+    Get.bottomSheet(
+      Container(
+        height: Get.height * .3,
+        width: Get.width,
+        color: kColorWhite,
+        padding: EdgeInsets.all(kHorizontalPadding),
+        child: Column(
+          children: [
+            Text(kSelectCategory, style: TextStyles.kH18BlackBold),
+            Expanded(
+              child: StreamBuilder(
+                stream: FirebaseServices()
+                    .fireStore
+                    .collection('categories')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Wrap(
+                      spacing: 2.0,
+                      runSpacing: 0.0,
+                      children: (snapshot.data?.docs ?? [])
+                          .map((item) => GestureDetector(
+                              onTap: () {
+                                controller.productCategoryController.text =
+                                    item.id;
+                                Get.back();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                margin: const EdgeInsets.symmetric(vertical: 2),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(kHorizontalPadding),
+                                  border: Border.all(
+                                      color: controller
+                                                  .productCategoryController
+                                                  .text ==
+                                              item.id
+                                          ? kColorBlack
+                                          : kColorGrayE0),
+                                ),
+                                child: Text(item.id),
+                              )
+                              // ActionChip(
+                              //   shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(
+                              //           kHorizontalPadding),
+                              //       side: BorderSide(
+                              //           color: controller
+                              //                       .productCategoryController
+                              //                       .text ==
+                              //                   item.id
+                              //               ? kColorBlack
+                              //               : kColorGrayE0,
+                              //           width: 1)),
+                              //   label: Text(item.id),
+                              // ),
+                              ))
+                          .toList()
+                          .cast<Widget>(),
+                    );
+                  } else {
+                    return showLoader();
+                  }
+                  // return ListView.builder(
+                  //   shrinkWrap: true,
+                  //   itemCount: snapshot.data?.docs.length,
+                  //   itemBuilder: (context, index) {
+                  //     return GestureDetector(
+                  //       onTap: () {
+                  //         controller.productCategoryController.text =
+                  //             (snapshot.data?.docs[index].id ?? '');
+                  //         Get.back();
+                  //       },
+                  //       child: Container(
+                  //         padding: const EdgeInsets.all(8.0),
+                  //         margin: EdgeInsets.all(8),
+                  //         decoration: BoxDecoration(
+                  //           borderRadius:
+                  //               BorderRadius.circular(kHorizontalPadding),
+                  //           border: Border.all(
+                  //               color: controller
+                  //                           .productCategoryController.text ==
+                  //                       (snapshot.data?.docs[index].id ?? '')
+                  //                   ? kColorBlack
+                  //                   : kColorGrayE0),
+                  //         ),
+                  //         child: Text(snapshot.data?.docs[index].id ?? ''),
+                  //       ),
+                  //     );
+                  //   },
+                  // );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

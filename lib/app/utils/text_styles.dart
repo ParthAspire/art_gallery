@@ -47,6 +47,12 @@ class TextStyles {
     fontWeight: FontWeight.w700,
     fontFamily: fontFamily,
   );
+  static const kH14Green35Bold700 = TextStyle(
+    fontSize: kH14FontSize,
+    color: kColorGreen35,
+    fontWeight: FontWeight.w700,
+    fontFamily: fontFamily,
+  );
   static const kH14Grey6ABold400 = TextStyle(
     fontSize: kH14FontSize,
     color: kColorGray6A,

@@ -1,6 +1,7 @@
 import 'package:art_gallery/app/common/color_constants.dart';
 import 'package:art_gallery/app/common/image_constants.dart';
 import 'package:art_gallery/app/screens/dashboard/bottom_nav/controller/bottom_nav_controller.dart';
+import 'package:art_gallery/app/screens/dashboard/favourite/base/view/fav_base_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/home/base/view/home_base_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/settings/base/view/settings_base_screen.dart';
 import 'package:art_gallery/app/widgets/water_drop_bottom_nav/src/bar_item.dart';
@@ -19,6 +20,7 @@ class BottomNavScreen extends GetView<BottomNavController> {
           index: controller.selectedIndex.value,
           children: [
             HomeBaseScreen(),
+            // FavBaseScreen(),
             SettingsBaseScreen(),
           ],
         ),
@@ -33,11 +35,17 @@ class BottomNavScreen extends GetView<BottomNavController> {
             BarItem(
               filledIcon: kIconHomeFilled,
               outlinedIcon: kIconHomeUnFilled,
-              imgHeight: 38,
+              imgHeight: 32,
             ),
+            // BarItem(
+            //   filledIcon: kIconFavFilled,
+            //   outlinedIcon: kIconFavUnFilled,
+            //   imgHeight: 30,
+            // ),
             BarItem(
               filledIcon: kIconProfileFilled,
               outlinedIcon: kIconProfileUnFilled,
+              imgHeight: 38,
             )
           ],
         ),

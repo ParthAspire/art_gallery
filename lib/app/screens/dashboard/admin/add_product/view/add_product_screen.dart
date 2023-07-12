@@ -7,6 +7,7 @@ import 'package:art_gallery/app/utils/content_properties.dart';
 import 'package:art_gallery/app/utils/loading_widget.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:art_gallery/app/widgets/common_textfield_widget.dart';
+import 'package:art_gallery/app/widgets/divider_widget.dart';
 import 'package:art_gallery/app/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -192,7 +193,11 @@ class AddProductScreen extends GetView<AddProductController> {
         padding: EdgeInsets.all(kHorizontalPadding),
         child: Column(
           children: [
-            Text(kSelectCategory, style: TextStyles.kH18BlackBold),
+            Text(kSelectCategory, style: TextStyles.kH24BlackBold),
+            Padding(
+              padding: const EdgeInsets.only(top: 6, bottom: 14),
+              child: horizontalDividerWidget(width: Get.width),
+            ),
             Expanded(
               child: StreamBuilder(
                 stream: FirebaseServices()
@@ -202,7 +207,7 @@ class AddProductScreen extends GetView<AddProductController> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Wrap(
-                      spacing: 2.0,
+                      spacing: 0.0,
                       runSpacing: 0.0,
                       children: (snapshot.data?.docs ?? [])
                           .map((item) => GestureDetector(
@@ -212,8 +217,9 @@ class AddProductScreen extends GetView<AddProductController> {
                                 Get.back();
                               },
                               child: Container(
-                                padding: const EdgeInsets.all(8),
-                                margin: const EdgeInsets.symmetric(vertical: 2),
+                                padding: const EdgeInsets.all(10),
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 10),
                                 decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.circular(kHorizontalPadding),
@@ -225,8 +231,10 @@ class AddProductScreen extends GetView<AddProductController> {
                                           ? kColorBlack
                                           : kColorGrayE0),
                                 ),
-                                child: Text(item.id),
+                                child: Text(item.id,
+                                    style: TextStyles.kH16BlackBold400),
                               )
+
                               // ActionChip(
                               //   shape: RoundedRectangleBorder(
                               //       borderRadius: BorderRadius.circular(

@@ -32,7 +32,6 @@ class HomeBaseController extends GetxController {
           .then((value) {
         DocumentSnapshot snap = value;
         userData.value = UserData.fromJson(snap.data() as Map<String, dynamic>);
-        print('userData ::: ${userData.value.photoUrl}');
       });
       isShowLoader.value = false;
     } catch (e) {
@@ -71,5 +70,82 @@ class HomeBaseController extends GetxController {
         .collection('products')
         .doc(productName)
         .delete();
+  }
+
+  Future<void> addOrRemoveFavProduct(ProductData productData) async {
+    await FirebaseServices()
+        .fireStore
+        .collection('favourites')
+        .doc(auth.currentUser?.uid)
+        .collection('products')
+        .doc(productData.productName ?? '')
+        .set(
+          ProductData(
+                  productCategory: productData.productCategory ?? '',
+                  productName: productData.productName ?? '',
+                  productDesc: productData.productDesc ?? '',
+                  productPrice: productData.productPrice ?? '',
+                  sellerName: productData.sellerName ?? '',
+                  productImage: productData.productImage ?? '',
+                  isFav: false,
+                  time: FieldValue.serverTimestamp().toString())
+              .toJson(),
+          // {
+
+          // 'seller_name': FirebaseServices().auth.currentUser?.displayName,
+          // 'product_name': 'Glass Art',
+          // 'time': FieldValue.serverTimestamp(),
+          // }
+        );
+
+    await uploadImageToFavouritesCollection(productData.productName ?? '');
+  }
+
+  Future<void> uploadImageToFavouritesCollection(String productName) async {
+    int count = 0;
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> fileName = [];
+    await FirebaseServices()
+        .fireStore
+        .collection('products')
+        .doc(productName)
+        .collection('images')
+        .get()
+        .then((value) {
+      count = value.size;
+      fileName.addAll(value.docs);
+    });
+
+    for (int i = 0; i < count; i++) {
+      await FirebaseServices()
+          .fireStore
+          .collection('favourites')
+          .doc(auth.currentUser?.uid)
+          .collection('products')
+          .doc(productName)
+          .collection('images')
+          .doc(fileName[i].data()['image_name'])
+          .set({
+        'image_url': fileName[i].data()['image_url'],
+        'image_name': fileName[i].data()['image_name'],
+        'time': FieldValue.serverTimestamp()
+      });
+    }
+  }
+
+  bool isProductExistInFavourites(ProductData productData) {
+    bool isProductExist = false;
+    FirebaseServices()
+        .fireStore
+        .collection('favourites')
+        .doc(auth.currentUser?.uid)
+        .collection('products')
+        .where('product_name', isEqualTo: productData.productName ?? '')
+        .get()
+        .then((value) {
+      value.size > 0 ? isProductExist = true : isProductExist = false;
+      return isProductExist;
+    });
+
+    return isProductExist;
   }
 }

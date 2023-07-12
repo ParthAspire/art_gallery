@@ -236,9 +236,9 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 
   productInfoContainer() {
     return Container(
-      height: Get.height * .7,
+      height: Get.height * .3, // .7
       decoration: BoxDecoration(
-        color: kColorBG,
+        // color: kColorBG,
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(26), topLeft: Radius.circular(26)),
       ),
@@ -249,7 +249,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: Get.width * .65,
@@ -259,8 +259,12 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                   maxLines: 2,
                 ),
               ),
-              Text('$kRupee ${controller.productData.value.productPrice ?? ''}',
-                  style: TextStyles.kH18BlackBold400),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                    '$kRupee ${controller.productData.value.productPrice ?? ''}',
+                    style: TextStyles.kH18BlackBold400),
+              ),
             ],
           ),
           Row(
@@ -273,7 +277,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
           Visibility(
             visible: controller.productDescController.text.trim().isNotEmpty,
             child: Padding(
-              padding: const EdgeInsets.only(top: 36),
+              padding: const EdgeInsets.only(top: 26),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

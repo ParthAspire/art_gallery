@@ -9,3 +9,4 @@ const kColorGray98 = Color(0xFF989898);
 const kColorGray6A = Color(0xFF6A5D6F);
 const kColorGray9B = Color(0xFF9B9B9B);
 const kColorGrayE0 = Color(0xFFE0E0E0);
+const kColorGreen35 = Color(0xFF355E3B); // Hunter Green

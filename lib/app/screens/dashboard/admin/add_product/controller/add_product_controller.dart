@@ -28,7 +28,8 @@ class AddProductController extends GetxController {
 
   setDefaultCategory() {
     try {
-      productCategoryController.text = FirebaseServices().fireStore.collection('categories').doc('All').id;
+      productCategoryController.text =
+          FirebaseServices().fireStore.collection('categories').doc('All').id;
     } catch (e) {
       debugPrint('setDefaultCategory :: $e');
     }
@@ -57,7 +58,7 @@ class AddProductController extends GetxController {
         .then((value) {
       value.size > 0 ? isProductNameExist = true : isProductNameExist = false;
     });
-    if (isProductNameExist) {
+    if (isProductNameExist == false) {
       for (var iData in selectedImages) {
         uploadImage(File(iData.path));
       }
@@ -105,7 +106,11 @@ class AddProductController extends GetxController {
           .doc(productName)
           .collection('images')
           .doc(fileName)
-          .update({'image_url': imageUrl, 'image_name': fileName});
+          .update({
+        'image_url': imageUrl,
+        'image_name': fileName,
+        'time': FieldValue.serverTimestamp()
+      });
 
       await FirebaseServices()
           .fireStore
@@ -133,13 +138,14 @@ class AddProductController extends GetxController {
             .doc(productName)
             .set(
               ProductData(
-                      productCategory: 'Art',
+                      productCategory: productCategoryController.text.trim(),
                       productName: productName,
                       productDesc: productDescController.text.trim(),
                       productPrice: productPriceController.text.trim(),
                       sellerName:
                           FirebaseServices().auth.currentUser?.displayName,
                       productImage: selectedImages.last.path,
+                      isFav: false,
                       time: FieldValue.serverTimestamp().toString())
                   .toJson(),
               // {

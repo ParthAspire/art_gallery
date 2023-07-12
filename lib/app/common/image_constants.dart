@@ -6,6 +6,8 @@ const String kIconHomeFilled = '$_iconPath/home_filled_icon.svg';
 const String kIconHomeUnFilled = '$_iconPath/home_unfilled_icon.svg';
 const String kIconProfileFilled = '$_iconPath/profile_filled_icon.svg';
 const String kIconProfileUnFilled = '$_iconPath/profile_unfilled_icon.svg';
+const String kIconFavUnFilled = '$_iconPath/fav_unfilled_icon.svg';
+const String kIconFavFilled = '$_iconPath/fav_filled_icon.svg';
 
 
 const String kIconApp ='$_iconPath/app_logo.svg';

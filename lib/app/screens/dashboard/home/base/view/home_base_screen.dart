@@ -7,8 +7,6 @@ import 'package:art_gallery/app/services/firebase_services.dart';
 import 'package:art_gallery/app/utils/content_properties.dart';
 import 'package:art_gallery/app/utils/loading_widget.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
-import 'package:art_gallery/app/widgets/common_app_bar.dart';
-import 'package:art_gallery/app/widgets/common_textfield_widget.dart';
 import 'package:art_gallery/app/widgets/delete_confirm_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -95,14 +93,13 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
       child: StreamBuilder(
         stream: FirebaseServices().fireStore.collection('products').snapshots(),
         builder: (context, snapshot) {
-          print('snapshot.hasData ::: ${snapshot.data?.size}');
           if (snapshot.hasData && (snapshot.data?.size ?? 0) > 0) {
             return GridView.builder(
               itemCount: snapshot.data?.docs.length,
               padding: EdgeInsets.symmetric(horizontal: 16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: .62,
+                  childAspectRatio: .56,
                   crossAxisSpacing: 10),
               itemBuilder: (context, index) {
                 ProductData productData = ProductData.fromJson(
@@ -124,11 +121,13 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                  border: Border.all(color: kColorBlack, width: .5),
-                                  borderRadius: BorderRadius.circular(kBorderRadius)),
+                                  border:
+                                      Border.all(color: kColorBlack, width: .5),
+                                  borderRadius:
+                                      BorderRadius.circular(kBorderRadius)),
                               child: ClipRRect(
                                 borderRadius:
-                                BorderRadius.circular(kBorderRadius),
+                                    BorderRadius.circular(kBorderRadius),
                                 child: CachedNetworkImage(
                                   imageUrl: productData.productImage ?? '',
                                   height: 200,
@@ -156,19 +155,36 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                                       style: TextStyles.kH18BlackBold,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis),
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                            text: 'Price: ',
-                                            style: TextStyles.kH14RedBold700),
-                                        TextSpan(
-                                            text:
-                                            'Rs.${productData.productPrice ??
-                                                ''}',
-                                            style: TextStyles.kH14BlackBold700),
-                                      ],
-                                    ),
+                                  Text(productData.productCategory ?? '',
+                                      style: TextStyles.kH14Grey6ABold400),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          controller.addOrRemoveFavProduct(
+                                              productData);
+                                        },
+                                        child: SvgPicture.asset(controller
+                                                .isProductExistInFavourites(
+                                                    productData)
+                                            ? kIconFavFilled
+                                            : kIconFavUnFilled),
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            // TextSpan(
+                                            //     text: 'Price: ',
+                                            //     style: TextStyles.kH14RedBold700),
+                                            TextSpan(
+                                                text:
+                                                    'Rs.${productData.productPrice ?? ''}',
+                                                style: TextStyles
+                                                    .kH14Green35Bold700),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),

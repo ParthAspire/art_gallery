@@ -49,8 +49,8 @@ class PersonalDetailsScreen extends GetView<PersonalDetailsController> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: commonTextField(
                     controller: controller.personNameController,
-                    hintText: kPersonName,
-                    labelText: kPersonName,
+                    hintText: kUserName,
+                    labelText: kUserName,
                   ),
                 ),
               ),

@@ -1,4 +1,5 @@
 const String kRouteLoginScreen = '/LoginScreen';
+const String kRouteOtpScreen = '/OtpScreen';
 
 const String kRouteOnBoardingScreen = '/OnBoardingScreen';
 const String kRouteBottomNavScreen = '/BottomNavScreen';

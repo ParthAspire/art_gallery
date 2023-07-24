@@ -41,6 +41,12 @@ class TextStyles {
     fontWeight: FontWeight.w700,
     fontFamily: fontFamily,
   );
+  static const kH14BlackBold400 = TextStyle(
+    fontSize: kH14FontSize,
+    color: kColorBlack,
+    fontWeight: FontWeight.w400,
+    fontFamily: fontFamily,
+  );
   static const kH14RedBold700 = TextStyle(
     fontSize: kH14FontSize,
     color: kColorRed,

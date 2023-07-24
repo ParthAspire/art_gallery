@@ -3,24 +3,24 @@ import 'package:art_gallery/app/utils/content_properties.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 
-Widget commonTextField(
+Widget commonAuthTextField(
     {required TextEditingController controller,
-    required String hintText,
-    required String labelText,
-    Widget? preFixIcon,
-    String? preFixText,
-    FocusNode? focusNode,
-    TextInputType keyboardType = TextInputType.text,
-    Function(String)? onChanged,
-    int maxLength = 50,
-    double elevation = 8.0,
-    int maxLines = 1,
-    double contentPadding = 15,
-    Function? onTap,
-    bool enabled = true,
-    bool readOnly = false,
-    //    Function(String)? validator,
-    bool prefixIconVisible = true}) {
+      required String hintText,
+      // required String labelText,
+      Widget? preFixIcon,
+      String? preFixText,
+      FocusNode? focusNode,
+      TextInputType keyboardType = TextInputType.text,
+      Function(String)? onChanged,
+      int maxLength = 50,
+      double elevation = 8.0,
+      int maxLines = 1,
+      double contentPadding = 15,
+      Function? onTap,
+      bool enabled = true,
+      bool readOnly = false,
+      //    Function(String)? validator,
+      bool prefixIconVisible = true}) {
   return Material(
     elevation: elevation,
     shadowColor: kColorBlack,
@@ -47,7 +47,7 @@ Widget commonTextField(
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(contentPadding),
         hintText: hintText,
-        labelText: labelText,
+        // labelText: labelText,
         labelStyle: TextStyles.kH14BlackBold700,
         hintStyle: TextStyles.kH14Grey6ABold400,
         prefixIcon: prefixIconVisible ? preFixIcon : null,

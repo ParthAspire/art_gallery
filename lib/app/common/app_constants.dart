@@ -14,6 +14,15 @@ const String kAdmin = 'Admin';
 const String kOr = 'Or';
 const String kHelloArtLovers = 'Hello, Art Lover\'s';
 
+/// otp screen labels
+const String kOtp = 'Otp';
+const String kEnterCode ='Enter code';
+const String kOtpTextOne= 'We’ve sent an SMS with an activation';
+const String kOtpTextTwo= 'code to your phone';
+const String kOtpTextThree= 'I didn’t receive a code';
+const String kResend= 'Resend';
+const String kVerify = 'Verify';
+
 /// settings screen labels
 const String kMyProfile = 'My Profile';
 const String kPersonalDetails = 'Personal Details';
@@ -46,16 +55,22 @@ const String kSelectCategory = 'Select Category';
 const String kProductHintDesc =
     'Acrylic paint is one of the most versatile mediums, and one of the least toxic. It is water-soluble.';
 const String kProductNameAlreadyExist = 'This product name is already exist';
-const String kFollowOn  ='Follow on';
+const String kFollowOn = 'Follow on';
 const String kRupee = 'Rs.';
 
 /// error labels
 const String kErrorGmail = 'Please login with valid credentials';
 
-
 /// personal details screen labels
-const String kPersonName ='Person Name';
-const String kEmail ='Email';
+const String kUserName = 'User Name';
+const String kMobileNumber = 'Mobile number';
+const String kEmail = 'Email';
+const String kPassword = 'Password';
+
+const String kHintUserName = 'Enter your full name';
+const String kHintMobileNumber = '9876543210';
+const String kHintEmail = 'abc@gmail.com';
+const String kHintPassword = '********';
 
 class AppConstants {
   static int userId = 0;

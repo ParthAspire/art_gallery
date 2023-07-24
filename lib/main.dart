@@ -3,6 +3,7 @@ import 'package:art_gallery/app/common/color_constants.dart';
 import 'package:art_gallery/app/common/route_constants.dart';
 import 'package:art_gallery/app/controller/controller_bindings.dart';
 import 'package:art_gallery/app/screens/auth/login/view/login_view.dart';
+import 'package:art_gallery/app/screens/auth/otp/view/otp_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/admin/add_product/view/add_product_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/bottom_nav/view/bottom_nav_screen.dart';
 import 'package:art_gallery/app/screens/dashboard/home/base/view/home_base_screen.dart';
@@ -56,6 +57,11 @@ class MyApp extends StatelessWidget {
           name: kRouteLoginScreen,
           page: () => LoginScreen(),
         ),
+        GetPage(
+          name: kRouteOtpScreen,
+          page: () => OtpScreen(),
+        ),
+
         GetPage(
           name: kRouteOnBoardingScreen,
           page: () => OnBoardingScreen(),

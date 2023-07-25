@@ -1,6 +1,9 @@
+import 'package:art_gallery/app/common/app_constants.dart';
 import 'package:art_gallery/app/common/route_constants.dart';
 import 'package:art_gallery/app/services/firebase_services.dart';
 import 'package:art_gallery/app/services/social_media_services.dart';
+import 'package:art_gallery/app/utils/regex_data.dart';
+import 'package:art_gallery/app/widgets/snack_bar_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +14,45 @@ class LoginController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
 
-  FirebaseFirestore fireStore = FirebaseFirestore.instance;
+  RxBool isMobileNumberValid = false.obs;
+
+  RxString errorMobileNumber = ''.obs;
+
+  Future<void> validateUserInput() async {
+    if (isMobileNumberValid.value &&
+        mobileNumberController.text.trim().replaceAll('-', '').length == 10) {
+      bool isExist = await FirebaseServices().isUserExist(
+          isSocialLogin: false,
+          mobileNo: mobileNumberController.text.trim().replaceAll('-', ''));
+      if (isExist) {
+        await FirebaseServices().sendOtpToMobileNumber(
+          phoneNumber: mobileNumberController.text.trim(),
+        );
+        navigateToOtpScreen();
+      } else {
+        snackBarWidget(Get.overlayContext!, kErrorUserNotExist);
+      }
+    } else {
+      mobileNumberValidation();
+    }
+  }
+
+  void mobileNumberValidation() {
+    isMobileNumberValid.value = false;
+    if (mobileNumberController.text.trim().isEmpty) {
+      errorMobileNumber.value = kErrorEnterMobileNumber;
+    } else if (!RegexData.mobileNumberRegex
+        .hasMatch(mobileNumberController.text.trim().replaceAll('-', ''))) {
+      errorMobileNumber.value = kErrorMobileNumberDigit;
+    } else if (mobileNumberController.text.trim().replaceAll('-', '').length !=
+        10) {
+      errorMobileNumber.value = kErrorMobileNumberDigit;
+    } else {
+      errorMobileNumber.value = '';
+      isMobileNumberValid.value = true;
+      validateUserInput();
+    }
+  }
 
   Future<void> loginAsViewer({bool isAdmin = false}) async {
     GoogleSignIn? gmailData = await SocialMediaServices().loginWithGmail();
@@ -52,5 +93,9 @@ class LoginController extends GetxController {
   void navigateToOtpScreen() {
     Get.toNamed(kRouteOtpScreen,
         arguments: [mobileNumberController.text.trim()]);
+  }
+
+  navigateToRegistrationScreen() {
+    Get.toNamed(kRouteRegistrationScreen);
   }
 }

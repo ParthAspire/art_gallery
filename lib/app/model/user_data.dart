@@ -11,6 +11,7 @@ String userDataToJson(UserData data) => json.encode(data.toJson());
 class UserData {
   String? name;
   String? email;
+  String? mobileNo;
   bool? isAdmin;
   String? deviceToken;
   String? photoUrl;
@@ -19,6 +20,7 @@ class UserData {
   UserData({
     this.name,
     this.email,
+    this.mobileNo,
     this.isAdmin,
     this.deviceToken,
     this.photoUrl,
@@ -28,6 +30,7 @@ class UserData {
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
     name: json["name"],
     email: json["email"],
+    mobileNo: json["mobile_no"],
     isAdmin: json["isAdmin"],
     deviceToken: json["deviceToken"],
     photoUrl: json["photoUrl"],
@@ -37,6 +40,7 @@ class UserData {
   Map<String, dynamic> toJson() => {
     "name": name,
     "email": email,
+    "mobile_no": mobileNo,
     "isAdmin": isAdmin,
     "deviceToken": deviceToken,
     "photoUrl": photoUrl,

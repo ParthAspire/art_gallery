@@ -13,13 +13,9 @@ class FirebaseServices {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-  static String _verificationId = "";
-
-
-
 
   static final FirebaseAuthenticationModel _mAuthModel =
-  FirebaseAuthenticationModel();
+      FirebaseAuthenticationModel();
 
   /// send otp to user mobile number
   Future<FirebaseAuthenticationModel> sendOtpToMobileNumber(
@@ -37,7 +33,7 @@ class FirebaseServices {
           print('verificationFailed $error');
         },
         codeSent: (String verificationId, forceResendingToken) {
-         print('codeSent $verificationId');
+          print('codeSent $verificationId');
           _mAuthModel.otpVerificationId = verificationId;
         },
         codeAutoRetrievalTimeout: (verificationId) {},
@@ -56,12 +52,10 @@ class FirebaseServices {
       PhoneAuthCredential? phoneAuthCredential = PhoneAuthProvider.credential(
           verificationId: _mAuthModel.otpVerificationId, smsCode: otp);
 
-
-
       try {
         // 1. Verify Otp and create user account
         UserCredential? userCredential =
-        await auth.signInWithCredential(phoneAuthCredential);
+            await auth.signInWithCredential(phoneAuthCredential);
 
         final idToken = await userCredential.user?.getIdToken();
         _mAuthModel.idToken = idToken ?? '';
@@ -73,14 +67,13 @@ class FirebaseServices {
         print('verifyUserOtp $ex');
       }
 
-
       // Get.find<AlertMessageUtils>().hideProgressDialog();
       _mAuthModel.isOtpVerified = true;
       return _mAuthModel;
     } catch (ex) {
       // Get.find<AlertMessageUtils>().hideProgressDialog();
       _mAuthModel.isOtpVerified = false;
-     print('otp failed $ex');
+      print('otp failed $ex');
       // if (ex is FirebaseAuthException) {
       //   LoggerUtils.logException('verifyUserOtp', ex.message);
       //   if (ex.code == kFcmCodeInvalidVerificationCode ||
@@ -94,89 +87,14 @@ class FirebaseServices {
     }
   }
 
-
-
-
-
-  /// send otp to phone number
-  verifyPhoneNumber(BuildContext context, String phoneNumber) async {
-    try {
-      await auth.verifyPhoneNumber(
-        phoneNumber: phoneNumber,
-        timeout: Duration(seconds: 60),
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          // Auto-verification if the phone number can be automatically verified
-          await auth.signInWithCredential(credential);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Phone number automatically verified.'),
-          ));
-          print('Phone number automatically verified.');
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Phone number verification failed: ${e.message}'),
-          ));
-          print('Phone number verification failed: ${e.message}');
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          _verificationId = verificationId;
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          _verificationId = verificationId;
-        },
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Failed to verify phone number: $e'),
-      ));
-    }
-  }
-
-  validateOtp({required String otpCode}) async {
-    // PhoneAuthCredential credential = PhoneAuthProvider.credential(
-    //     verificationId: FirebaseServices.verify, smsCode: otpCode);
-    // await auth.signInWithCredential(credential);
-    // try {
-
-    print('FirebaseServices.verify :: ${FirebaseServices._verificationId}');
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: FirebaseServices._verificationId, smsCode: otpCode);
-    await auth.signInWithCredential(credential).then((value) {
-      print('value ::: ${value}');
-    });
-    // } catch (e) {
-    //   ScaffoldMessenger.of(Get.overlayContext!).showSnackBar(
-    //       const SnackBar(content: Text("Wrong OTP! Please enter again")));
-    //   print("Wrong OTP");
-    // }
-  }
-
-  Future<void> signInWithOTP(BuildContext context,
-      {required String otpCode}) async {
-    try {
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: FirebaseServices._verificationId,
-        smsCode: otpCode,
-      );
-      await auth.signInWithCredential(credential);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('OTP verification successful.'),
-      ));
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Failed to sign in with OTP: $e'),
-      ));
-      print('Failed to sign in with OTP: $e');
-    }
-  }
-
   /// create account using firebase
   Future<User?> createAccount(
       {required String name,
       required String email,
       required String password,
       required String photoUrl,
-      required bool isAdmin}) async {
+      required bool isAdmin,
+      String? mobileNo}) async {
     try {
       User? user = (await auth.createUserWithEmailAndPassword(
               email: email, password: password))
@@ -185,13 +103,16 @@ class FirebaseServices {
       if (user != null) {
         String? deviceToken = await FirebaseMessaging.instance.getToken();
 
+        print('uid :: ${user.uid}');
         user.updateEmail(email);
         user.updateDisplayName(name);
         user.updatePhotoURL(photoUrl);
         user.updatePassword(password);
+        user.updatePassword(mobileNo??'');
         await fireStore.collection('users').doc(user.uid).set({
           'name': name,
           'email': email,
+          'mobile_no': mobileNo,
           'isAdmin': isAdmin,
           'password': password,
           'photoUrl': photoUrl,
@@ -238,12 +159,17 @@ class FirebaseServices {
   }
 
   /// check if user exist or not
-  Future<bool> isUserExist({required GoogleSignIn gmailData}) async {
+  Future<bool> isUserExist(
+      {bool isSocialLogin = true,
+      String? mobileNo,
+      GoogleSignIn? gmailData}) async {
     try {
       bool isExist = false;
       await fireStore
           .collection('users')
-          .where('email', isEqualTo: gmailData.currentUser?.email)
+          .where(isSocialLogin ? 'email' : 'mobile_no',
+              isEqualTo:
+                  isSocialLogin ? gmailData?.currentUser?.email : mobileNo)
           .get()
           .then((value) {
         value.size > 0 ? isExist = true : isExist = false;

@@ -7,20 +7,29 @@ const String kNext = 'Next';
 const String kSkip = 'Skip';
 
 /// login screen labels
-const String kLogin = 'Login';
+const String kLogin = 'Log in';
 const String kContinueWithGoogle = 'Continue with Google';
 const String kVisitor = 'Visitor';
 const String kAdmin = 'Admin';
 const String kOr = 'Or';
+const String kLoginWith = 'Login with';
 const String kHelloArtLovers = 'Hello, Art Lover\'s';
+const String kSignUp = 'Sign up';
+const String kSignUpText = 'Don\'t have an account?';
+const String kAlreadyHaveAnAccount = 'Already have an account?';
+
+/// registration screen labels
+const String kRegistration = 'Registration';
+const String kNoProfileFound = 'No profile found';
+const String kUpload = 'Upload';
 
 /// otp screen labels
 const String kOtp = 'Otp';
-const String kEnterCode ='Enter code';
-const String kOtpTextOne= 'We’ve sent an SMS with an activation';
-const String kOtpTextTwo= 'code to your phone';
-const String kOtpTextThree= 'I didn’t receive a code';
-const String kResend= 'Resend';
+const String kEnterCode = 'Enter code';
+const String kOtpTextOne = 'We’ve sent an SMS with an activation';
+const String kOtpTextTwo = 'code to your phone';
+const String kOtpTextThree = 'I didn’t receive a code';
+const String kResend = 'Resend';
 const String kVerify = 'Verify';
 
 /// settings screen labels
@@ -58,9 +67,6 @@ const String kProductNameAlreadyExist = 'This product name is already exist';
 const String kFollowOn = 'Follow on';
 const String kRupee = 'Rs.';
 
-/// error labels
-const String kErrorGmail = 'Please login with valid credentials';
-
 /// personal details screen labels
 const String kUserName = 'User Name';
 const String kMobileNumber = 'Mobile number';
@@ -68,9 +74,17 @@ const String kEmail = 'Email';
 const String kPassword = 'Password';
 
 const String kHintUserName = 'Enter your full name';
-const String kHintMobileNumber = '9876543210';
+const String kHintMobileNumber = '123-456-7890';
 const String kHintEmail = 'abc@gmail.com';
 const String kHintPassword = '********';
+
+/// error labels
+const String kErrorGmail = 'Please login with valid credentials';
+const String kErrorUserAlreadyExist = 'User already exist';
+const String kErrorUserNotExist = 'User doesn\'t found';
+const String kErrorEnterMobileNumber = 'please enter mobile number';
+const String kErrorEnterValidMobileNumber = 'please enter valid mobile number';
+const String kErrorMobileNumberDigit = 'Invalid mobile no. ex. : 123-456-7890';
 
 class AppConstants {
   static int userId = 0;

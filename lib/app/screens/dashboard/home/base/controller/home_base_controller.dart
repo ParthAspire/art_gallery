@@ -24,6 +24,7 @@ class HomeBaseController extends GetxController {
 
   void getUserInfo() {
     try {
+      print('auth :: ${auth.currentUser?.uid}');
       FirebaseServices()
           .fireStore
           .collection('users')

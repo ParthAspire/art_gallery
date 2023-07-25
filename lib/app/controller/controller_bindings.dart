@@ -1,5 +1,6 @@
 import 'package:art_gallery/app/screens/auth/login/controller/login_controller.dart';
 import 'package:art_gallery/app/screens/auth/otp/controller/otp_controller.dart';
+import 'package:art_gallery/app/screens/auth/registration/controller/registration_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/admin/add_product/controller/add_product_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/bottom_nav/controller/bottom_nav_controller.dart';
 import 'package:art_gallery/app/screens/dashboard/favourite/base/controller/fav_base_controler.dart';
@@ -18,6 +19,8 @@ class ControllerBindings implements Bindings {
     // TODO: implement dependencies
     Get.lazyPut<LoginController>(() => LoginController(), fenix: true);
     Get.lazyPut<OtpController>(() => OtpController(), fenix: true);
+    Get.lazyPut<RegistrationController>(() => RegistrationController(),
+        fenix: true);
 
     Get.lazyPut<OnBoardingController>(() => OnBoardingController(),
         fenix: true);

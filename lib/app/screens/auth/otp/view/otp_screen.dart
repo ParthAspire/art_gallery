@@ -5,6 +5,7 @@ import 'package:art_gallery/app/screens/auth/otp/controller/otp_controller.dart'
 import 'package:art_gallery/app/utils/content_properties.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:art_gallery/app/widgets/primary_button.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -90,7 +91,7 @@ class OtpScreen extends GetView<OtpController> {
                             style: TextStyles.kH14BlackBold400),
                         TextSpan(
                             text: '  ${kResend}',
-                            style: TextStyles.kH14BlackBold700),
+                            style: TextStyles.kH14BlackBold700,recognizer:TapGestureRecognizer()..onTap=( )=>controller.resendOtp()),
                       ],
                     ),
                   ),

@@ -125,13 +125,15 @@ class SettingsBaseScreen extends GetView<SettingsBaseController> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(kBorderRadius),
-            child: CachedNetworkImage(
-              imageUrl: controller.userData.photoUrl ?? '',
-              height: 58,
-            ),
-          ),
+          (controller.userData.photoUrl ?? '').isNotEmpty
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(kBorderRadius),
+                  child: CachedNetworkImage(
+                    imageUrl: controller.userData.photoUrl ?? '',
+                    height: 58,
+                  ),
+                )
+              : SvgPicture.asset(kIconDefaultProfile),
           Padding(
             padding: const EdgeInsets.only(left: 10, top: 4),
             child: Column(

@@ -19,9 +19,13 @@ class OtpController extends GetxController {
   }
 
   Future<void> verifyOtp() async {
-    // FirebaseServices().validateOtp(otpCode: otp.value);
-    // FirebaseServices().signInWithOTP(Get.overlayContext!,otpCode: otp.value);
-   await FirebaseServices().verifyUserOtp(otpText.value);
-    Get.offAllNamed(kRouteHomeBaseScreen);
+    await FirebaseServices().verifyUserOtp(otpText.value);
+    Get.offAllNamed(kRouteBottomNavScreen);
+  }
+
+  resendOtp() async {
+    await FirebaseServices().sendOtpToMobileNumber(
+      phoneNumber: mobileNumber.value,
+    );
   }
 }

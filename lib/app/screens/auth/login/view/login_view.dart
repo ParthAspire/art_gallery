@@ -9,7 +9,10 @@ import 'package:art_gallery/app/widgets/common_auth_textfield_widget.dart';
 import 'package:art_gallery/app/widgets/common_textfield_widget.dart';
 import 'package:art_gallery/app/widgets/divider_widget.dart';
 import 'package:art_gallery/app/widgets/primary_button.dart';
+import 'package:art_gallery/app/widgets/snack_bar_widget.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -40,7 +43,8 @@ class LoginScreen extends GetView<LoginController> {
               children: [
                 Center(
                   child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 6),
                       decoration: BoxDecoration(
                           color: kColorWhite,
                           borderRadius: BorderRadius.circular(4)),
@@ -60,66 +64,81 @@ class LoginScreen extends GetView<LoginController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 4),
                         child: Text(
                           kMobileNumber,
                           style: TextStyles.kH14BlackBold700,
                         ),
                       ),
-                      commonAuthTextField(
-                          controller: controller.mobileNumberController,
-                          hintText: kHintMobileNumber,
-                          preFixIcon: Padding(
-                            padding: const EdgeInsets.only(top: 15, left: 16),
-                            child: Text('+91'),
-                          ),
-                          maxLength: 10,
-                          keyboardType: TextInputType.phone),
+                      Obx(() {
+                        return commonAuthTextField(
+                            controller: controller.mobileNumberController,
+                            hintText: kHintMobileNumber,
+                            errorText: controller.errorMobileNumber.value,
+                            isShowErrorText:
+                                controller.isMobileNumberValid.value == false &&
+                                    controller
+                                        .errorMobileNumber.value.isNotEmpty,
+                            inputFormatters: [
+                              MaskedInputFormatter('###-###-####')
+                            ],
+                            preFixIcon: const Padding(
+                              padding: EdgeInsets.only(top: 15, left: 16),
+                              child: Text('+91'),
+                            ),
+                            maxLength: 12,
+                            keyboardType: TextInputType.phone);
+                      }),
                     ],
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Text(
-                        kPassword,
-                        style: TextStyles.kH14BlackBold700,
-                      ),
-                    ),
-                    commonAuthTextField(
-                      controller: controller.passwordController,
-                      hintText: kHintPassword,
-                    ),
-                  ],
-                ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     const Padding(
+                //       padding: EdgeInsets.only(bottom: 4),
+                //       child: Text(
+                //         kPassword,
+                //         style: TextStyles.kH14BlackBold700,
+                //       ),
+                //     ),
+                //     commonAuthTextField(
+                //       controller: controller.passwordController,
+                //       hintText: kHintPassword,
+                //     ),
+                //   ],
+                // ),
 
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: Get.height * .06),
+                  padding: EdgeInsets.symmetric(vertical: Get.height * .05),
                   child: primaryButton(
                       onPress: () async {
                         // String str =
-                        await FirebaseServices().sendOtpToMobileNumber(
-                          phoneNumber:
-                              controller.mobileNumberController.text.trim(),
-                        );
-                        controller.navigateToOtpScreen();
+                        FocusScope.of(context).unfocus();
+                        controller.validateUserInput();
+
+                        // await FirebaseServices().sendOtpToMobileNumber(
+                        //   phoneNumber:
+                        //       controller.mobileNumberController.text.trim(),
+                        // );
+                        // controller.navigateToOtpScreen();
                       },
-                      buttonTxt: kLogin),
+                      buttonTxt: kLogin,
+                      textStyles: TextStyles.kH22WhiteBold),
                 ),
 
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    horizontalDividerWidget(width: Get.width * .35),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Text(kOr,
+                    horizontalDividerWidget(width: Get.width * .25),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Text('$kOr $kLoginWith',
                           style: TextStyles.kH16BlackBold400,
                           textAlign: TextAlign.center),
                     ),
-                    horizontalDividerWidget(width: Get.width * .35),
+                    horizontalDividerWidget(width: Get.width * .25),
                   ],
                 ),
                 GestureDetector(
@@ -127,7 +146,7 @@ class LoginScreen extends GetView<LoginController> {
                     controller.loginAsViewer(isAdmin: false);
                   },
                   child: Container(
-                    margin: const EdgeInsets.only(left: 32, right: 32, top: 40),
+                    margin: const EdgeInsets.only(left: 44, right: 44, top: 30),
                     decoration: BoxDecoration(
                       color: kColorWhite,
                       borderRadius: BorderRadius.circular(8),
@@ -141,16 +160,38 @@ class LoginScreen extends GetView<LoginController> {
                             borderRadius: BorderRadius.circular(8),
                             // border: Border.all(color: kColorPrimary),
                           ),
-                          child: SvgPicture.asset(kIconGoogle),
+                          child: SvgPicture.asset(kIconGoogle, height: 32),
                           margin: const EdgeInsets.all(8),
                         ),
                         SizedBox(
-                          width: Get.width * .55,
-                          child: Text(kContinueWithGoogle,
-                              style: TextStyles.kH20BlackBold,
+                          width: Get.width * .5,
+                          child: const Text(kContinueWithGoogle,
+                              style: TextStyles.kH18BlackBold,
                               textAlign: TextAlign.center),
                         ),
                       ],
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          const TextSpan(
+                              text: '$kSignUpText ',
+                              style: TextStyles.kH14BlackBold400),
+                          TextSpan(
+                            text: kSignUp,
+                            style: TextStyles.kH14BlackBold,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () =>
+                                  controller.navigateToRegistrationScreen(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -245,7 +286,7 @@ class LoginScreen extends GetView<LoginController> {
                           Container(
                             width: Get.width * .35,
                             height: .5,
-                            margin: EdgeInsets.only(left: 16),
+                            margin: const EdgeInsets.only(left: 16),
                             color: kColorGray98,
                           ),
                           Text(kOr.toUpperCase(),
@@ -253,7 +294,7 @@ class LoginScreen extends GetView<LoginController> {
                           Container(
                             width: Get.width * .35,
                             height: .5,
-                            margin: EdgeInsets.only(right: 16),
+                            margin: const EdgeInsets.only(right: 16),
                             color: kColorGray98,
                           ),
                         ],

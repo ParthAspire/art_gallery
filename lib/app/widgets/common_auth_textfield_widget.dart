@@ -2,25 +2,30 @@ import 'package:art_gallery/app/common/color_constants.dart';
 import 'package:art_gallery/app/utils/content_properties.dart';
 import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 
 Widget commonAuthTextField(
     {required TextEditingController controller,
-      required String hintText,
-      // required String labelText,
-      Widget? preFixIcon,
-      String? preFixText,
-      FocusNode? focusNode,
-      TextInputType keyboardType = TextInputType.text,
-      Function(String)? onChanged,
-      int maxLength = 50,
-      double elevation = 8.0,
-      int maxLines = 1,
-      double contentPadding = 15,
-      Function? onTap,
-      bool enabled = true,
-      bool readOnly = false,
-      //    Function(String)? validator,
-      bool prefixIconVisible = true}) {
+    required String hintText,
+    // required String labelText,
+    Widget? preFixIcon,
+    String? preFixText,
+    FocusNode? focusNode,
+    TextInputType keyboardType = TextInputType.text,
+    List<TextInputFormatter>? inputFormatters,
+    Function(String)? onChanged,
+    int maxLength = 50,
+    double elevation = 0, // 8
+    int maxLines = 1,
+    double contentPadding = 15,
+    Function? onTap,
+    String errorText = '',
+    bool enabled = true,
+    bool readOnly = false,
+    bool isShowErrorText = false,
+    //    Function(String)? validator,
+    bool prefixIconVisible = true}) {
   return Material(
     elevation: elevation,
     shadowColor: kColorBlack,
@@ -37,6 +42,7 @@ Widget commonAuthTextField(
       onChanged: onChanged,
       cursorColor: kColorBlack,
       readOnly: readOnly,
+      inputFormatters: inputFormatters,
       onTap: () {
         try {
           onTap!();
@@ -50,6 +56,7 @@ Widget commonAuthTextField(
         // labelText: labelText,
         labelStyle: TextStyles.kH14BlackBold700,
         hintStyle: TextStyles.kH14Grey6ABold400,
+        errorText: isShowErrorText ? errorText : null,
         prefixIcon: prefixIconVisible ? preFixIcon : null,
         prefixText: preFixText,
         counterText: '',

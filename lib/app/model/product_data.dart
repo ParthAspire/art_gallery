@@ -16,6 +16,8 @@ class ProductData {
   String? time;
   String? sellerName;
   String? productImage;
+  int? imageHeight;
+  int? imageWidth;
   bool? isFav;
   List<ProductImage>? images;
 
@@ -27,6 +29,8 @@ class ProductData {
     this.time,
     this.sellerName,
     this.productImage,
+    this.imageHeight,
+    this.imageWidth,
     this.isFav,
     this.images,
   });
@@ -39,6 +43,8 @@ class ProductData {
     time: json["time"],
     sellerName: json["seller_name"],
     productImage: json["product_image"],
+    imageHeight: json["image_height"],
+    imageWidth: json["image_width"],
     isFav: json["isFav"],
     images: List<ProductImage>.from(json["images"].map((x) => ProductImage.fromJson(x))),
   );
@@ -51,6 +57,8 @@ class ProductData {
     "time": time,
     "seller_name": sellerName,
     "product_image": productImage,
+    "image_height": imageHeight,
+    "image_width": imageWidth,
     "isFav": isFav,
     "images": List<dynamic>.from((images??[]).map((x) => x.toJson())),
   };

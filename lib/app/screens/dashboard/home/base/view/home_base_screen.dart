@@ -10,6 +10,7 @@ import 'package:art_gallery/app/utils/text_styles.dart';
 import 'package:art_gallery/app/widgets/delete_confirm_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -94,13 +95,12 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
         stream: FirebaseServices().fireStore.collection('products').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData && (snapshot.data?.size ?? 0) > 0) {
-            return GridView.builder(
-              itemCount: snapshot.data?.docs.length,
+            return MasonryGridView.count(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: .56,
-                  crossAxisSpacing: 10),
+              crossAxisCount: 2,
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 16,
+              itemCount: snapshot.data?.docs.length,
               itemBuilder: (context, index) {
                 ProductData productData = ProductData.fromJson(
                     snapshot.data?.docs[index].data() as Map<String, dynamic>);
@@ -121,18 +121,19 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: kColorBlack, width: .5),
-                                  borderRadius:
-                                      BorderRadius.circular(kBorderRadius)),
+                                color: Colors.transparent,
+                                border: Border.all(color: kColorGrayE0),
+                                borderRadius:
+                                    BorderRadius.circular(kBorderRadius),
+                              ),
                               child: ClipRRect(
                                 borderRadius:
                                     BorderRadius.circular(kBorderRadius),
                                 child: CachedNetworkImage(
                                   imageUrl: productData.productImage ?? '',
-                                  height: 200,
+                                  // height: 200,
                                   fit: BoxFit.fill,
-                                  width: Get.width,
+                                  // width: Get.width,
                                   progressIndicatorBuilder:
                                       (context, url, progress) {
                                     return showLoader(
@@ -145,50 +146,83 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                                   },
                                 ),
                               ),
+                              // height: (index % 5 + 1) * 100,
+                              // height: ((productData.imageHeight ?? 250) /
+                              //         (productData.imageWidth ?? 2))
+                              //     .toDouble(),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(productData.productName ?? '',
-                                      style: TextStyles.kH18BlackBold,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis),
-                                  Text(productData.productCategory ?? '',
-                                      style: TextStyles.kH14Grey6ABold400),
-                                  Row(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          controller.addOrRemoveFavProduct(
-                                              productData);
-                                        },
-                                        child: SvgPicture.asset(controller
-                                                .isProductExistInFavourites(
-                                                    productData)
-                                            ? kIconFavFilled
-                                            : kIconFavUnFilled),
-                                      ),
-                                      RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            // TextSpan(
-                                            //     text: 'Price: ',
-                                            //     style: TextStyles.kH14RedBold700),
-                                            TextSpan(
-                                                text:
-                                                    'Rs.${productData.productPrice ?? ''}',
-                                                style: TextStyles
-                                                    .kH14Green35Bold700),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
+
+                            // Container(
+                            //   decoration: BoxDecoration(
+                            //       border:
+                            //           Border.all(color: kColorBlack, width: .5),
+                            //       borderRadius:
+                            //           BorderRadius.circular(kBorderRadius)),
+                            //   child: ClipRRect(
+                            //     borderRadius:
+                            //         BorderRadius.circular(kBorderRadius),
+                            //     child: CachedNetworkImage(
+                            //       imageUrl: productData.productImage ?? '',
+                            //       height: 200,
+                            //       fit: BoxFit.fill,
+                            //       width: Get.width,
+                            //       progressIndicatorBuilder:
+                            //           (context, url, progress) {
+                            //         return showLoader(
+                            //             bgColor: Colors.transparent);
+                            //       },
+                            //       errorWidget: (context, url, error) {
+                            //         return showLoader(
+                            //             bgColor: Colors.transparent);
+                            //         // return SvgPicture.asset(kImgDefaultProduct);
+                            //       },
+                            //     ),
+                            //   ),
+                            // ),
+
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Column(
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: [
+                            //       Text(productData.productName ?? '',
+                            //           style: TextStyles.kH18BlackBold,
+                            //           maxLines: 1,
+                            //           overflow: TextOverflow.ellipsis),
+                            //       Text(productData.productCategory ?? '',
+                            //           style: TextStyles.kH14Grey6ABold400),
+                            //       Row(
+                            //         children: [
+                            //           // GestureDetector(
+                            //           //   onTap: () {
+                            //           //     controller.addOrRemoveFavProduct(
+                            //           //         productData);
+                            //           //   },
+                            //           //   child: SvgPicture.asset(controller
+                            //           //           .isProductExistInFavourites(
+                            //           //               productData)
+                            //           //       ? kIconFavFilled
+                            //           //       : kIconFavUnFilled),
+                            //           // ),
+                            //           RichText(
+                            //             text: TextSpan(
+                            //               children: [
+                            //                 // TextSpan(
+                            //                 //     text: 'Price: ',
+                            //                 //     style: TextStyles.kH14RedBold700),
+                            //                 TextSpan(
+                            //                     text:
+                            //                         'Rs.${productData.productPrice ?? ''}',
+                            //                     style: TextStyles
+                            //                         .kH14Green35Bold700),
+                            //               ],
+                            //             ),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -222,6 +256,135 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
                 );
               },
             );
+
+            // return GridView.builder(
+            //   itemCount: snapshot.data?.docs.length,
+            //   padding: EdgeInsets.symmetric(horizontal: 16),
+            //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //       crossAxisCount: 2,
+            //       childAspectRatio: .56,
+            //       crossAxisSpacing: 10),
+            //   itemBuilder: (context, index) {
+            //     ProductData productData = ProductData.fromJson(
+            //         snapshot.data?.docs[index].data() as Map<String, dynamic>);
+            //     return Stack(
+            //       children: [
+            //         GestureDetector(
+            //           onTap: () {
+            //             controller.navigateToProductDetailsScreen(
+            //                 productData: productData);
+            //           },
+            //           child: Container(
+            //             margin: EdgeInsets.symmetric(vertical: 10),
+            //             // decoration: BoxDecoration(
+            //             //     border: Border.all(color: kColorBlack, width: .5),
+            //             //     borderRadius: BorderRadius.circular(kBorderRadius)),
+            //             child: Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Container(
+            //                   decoration: BoxDecoration(
+            //                       border:
+            //                           Border.all(color: kColorBlack, width: .5),
+            //                       borderRadius:
+            //                           BorderRadius.circular(kBorderRadius)),
+            //                   child: ClipRRect(
+            //                     borderRadius:
+            //                         BorderRadius.circular(kBorderRadius),
+            //                     child: CachedNetworkImage(
+            //                       imageUrl: productData.productImage ?? '',
+            //                       height: 200,
+            //                       fit: BoxFit.fill,
+            //                       width: Get.width,
+            //                       progressIndicatorBuilder:
+            //                           (context, url, progress) {
+            //                         return showLoader(
+            //                             bgColor: Colors.transparent);
+            //                       },
+            //                       errorWidget: (context, url, error) {
+            //                         return showLoader(
+            //                             bgColor: Colors.transparent);
+            //                         // return SvgPicture.asset(kImgDefaultProduct);
+            //                       },
+            //                     ),
+            //                   ),
+            //                 ),
+            //                 Padding(
+            //                   padding: const EdgeInsets.all(8.0),
+            //                   child: Column(
+            //                     crossAxisAlignment: CrossAxisAlignment.start,
+            //                     children: [
+            //                       Text(productData.productName ?? '',
+            //                           style: TextStyles.kH18BlackBold,
+            //                           maxLines: 1,
+            //                           overflow: TextOverflow.ellipsis),
+            //                       Text(productData.productCategory ?? '',
+            //                           style: TextStyles.kH14Grey6ABold400),
+            //                       Row(
+            //                         children: [
+            //                           GestureDetector(
+            //                             onTap: () {
+            //                               controller.addOrRemoveFavProduct(
+            //                                   productData);
+            //                             },
+            //                             child: SvgPicture.asset(controller
+            //                                     .isProductExistInFavourites(
+            //                                         productData)
+            //                                 ? kIconFavFilled
+            //                                 : kIconFavUnFilled),
+            //                           ),
+            //                           RichText(
+            //                             text: TextSpan(
+            //                               children: [
+            //                                 // TextSpan(
+            //                                 //     text: 'Price: ',
+            //                                 //     style: TextStyles.kH14RedBold700),
+            //                                 TextSpan(
+            //                                     text:
+            //                                         'Rs.${productData.productPrice ?? ''}',
+            //                                     style: TextStyles
+            //                                         .kH14Green35Bold700),
+            //                               ],
+            //                             ),
+            //                           ),
+            //                         ],
+            //                       ),
+            //                     ],
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //         Visibility(
+            //           visible: controller.userData.value.isAdmin == true,
+            //           child: Positioned.fill(
+            //             child: GestureDetector(
+            //               onTap: () => showDeleteProductDialog(productData),
+            //               child: Align(
+            //                 alignment: Alignment.topRight,
+            //                 child: Container(
+            //                   height: 30,
+            //                   width: 30,
+            //                   margin: EdgeInsets.only(top: 14, right: 8),
+            //                   padding: EdgeInsets.all(0),
+            //                   decoration: BoxDecoration(
+            //                     color: kColorWhite,
+            //                     borderRadius: BorderRadius.circular(50),
+            //                   ),
+            //                   child: SvgPicture.asset(
+            //                     kIconDelete,
+            //                     height: 20,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     );
+            //   },
+            // );
           } else if (snapshot.data?.size == 0) {
             return Column(children: [
               SvgPicture.asset(kImgNoProductFound),
@@ -300,6 +463,61 @@ class HomeBaseScreen extends GetView<HomeBaseController> {
           );
         }),
       ],
+    );
+  }
+
+  productInfoContainer(ProductData productData) {
+    return Positioned.fill(
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          height: 85,
+          decoration: BoxDecoration(
+            color: kColorWhite.withOpacity(.8),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(productData.productName ?? '',
+                    style: TextStyles.kH18BlackBold,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis),
+                Text(productData.productCategory ?? '',
+                    style: TextStyles.kH14Grey6ABold400),
+                Row(
+                  children: [
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     controller.addOrRemoveFavProduct(
+                    //         productData);
+                    //   },
+                    //   child: SvgPicture.asset(controller
+                    //           .isProductExistInFavourites(
+                    //               productData)
+                    //       ? kIconFavFilled
+                    //       : kIconFavUnFilled),
+                    // ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          // TextSpan(
+                          //     text: 'Price: ',
+                          //     style: TextStyles.kH14RedBold700),
+                          TextSpan(
+                              text: 'Rs.${productData.productPrice ?? ''}',
+                              style: TextStyles.kH14Green35Bold700),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

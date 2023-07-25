@@ -38,9 +38,12 @@ class AddProductController extends GetxController {
   Future<void> selectImageFromGallery() async {
     ImagePicker picker = ImagePicker();
     await picker.pickMultiImage().then(
-      (value) {
+      (value) async {
         for (var iData in value) {
           selectedImages.add(File(iData.path));
+
+
+
           // uploadImage(File(iData.path));
         }
       },
@@ -132,6 +135,9 @@ class AddProductController extends GetxController {
         .isProductExist(fileName: fileName)
         .then((isExist) async {
       if (isExist == false) {
+        var decodedImage = await decodeImageFromList(File(selectedImages.last.path).readAsBytesSync());
+        print('width :: ${decodedImage.width}');
+        print('height :: ${decodedImage.height}');
         await FirebaseServices()
             .fireStore
             .collection('products')
@@ -145,6 +151,8 @@ class AddProductController extends GetxController {
                       sellerName:
                           FirebaseServices().auth.currentUser?.displayName,
                       productImage: selectedImages.last.path,
+                      imageHeight: decodedImage.height,
+                      imageWidth: decodedImage.width,
                       isFav: false,
                       time: FieldValue.serverTimestamp().toString())
                   .toJson(),

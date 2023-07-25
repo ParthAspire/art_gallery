@@ -139,6 +139,12 @@ class TextStyles {
     fontWeight: FontWeight.w400,
     fontFamily: fontFamily,
   );
+  static const kH18Green35Bold = TextStyle(
+    fontSize: kH18FontSize,
+    color: kColorGreen35,
+    fontWeight: FontWeight.bold,
+    fontFamily: fontFamily,
+  );
   static const kH18RedBold400 = TextStyle(
     fontSize: kH18FontSize,
     color: kColorRed,

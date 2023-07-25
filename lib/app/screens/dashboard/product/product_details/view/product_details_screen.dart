@@ -262,8 +262,8 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                    '$kRupee ${controller.productData.value.productPrice ?? ''}',
-                    style: TextStyles.kH18BlackBold400),
+                    '$kRupee${controller.productData.value.productPrice ?? ''}',
+                    style: TextStyles.kH18Green35Bold),
               ),
             ],
           ),
